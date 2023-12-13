@@ -72,7 +72,7 @@ const CoustomTextinput = ({
             height: responsiveHeight(5.5),
             backgroundColor: '#F8F8F8',
             borderRadius: responsiveWidth(2),
-            width: inputWidht ? inputWidht : responsiveWidth(80),
+            width: inputWidht ? inputWidht : responsiveWidth(90),
             justifyContent: 'space-between',
             flexDirection: 'row',
             alignItems: 'center',
@@ -122,7 +122,7 @@ const CoustomTextinput = ({
                   height: responsiveHeight(3),
                   width: responsiveHeight(3),
                   tintColor: tintColor,
-                  left: responsiveWidth(4),
+                  left: responsiveWidth(15),
                 }}
                 source={inputIcon}
               />

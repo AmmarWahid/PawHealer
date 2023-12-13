@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
           style={{
             color: '#000',
             fontSize: responsiveFontSize(5),
-            fontWeight: '600',
+            fontFamily: 'Poppins-Bold',
           }}>
           Sign in
         </Text>
@@ -62,6 +62,7 @@ const Login = ({navigation}) => {
           style={{
             color: 'rgba(128, 116, 116, 1)',
             fontSize: responsiveFontSize(1.6),
+            fontFamily: 'Poppins-Regular',
           }}>
           Login to your account
         </Text>
@@ -93,6 +94,9 @@ const Login = ({navigation}) => {
           textbgcolor={'#000'}
         />
         <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Forgetpassword');
+          }}
           style={{width: responsiveWidth(80), alignSelf: 'center'}}>
           <Text style={styles.forgetpass}>Forget Password ?</Text>
         </TouchableOpacity>
@@ -117,9 +121,13 @@ const Login = ({navigation}) => {
               fontSize: responsiveFontSize(1.7),
               color: '#000',
               fontWeight: '500',
+              fontFamily: 'Poppins-Regular',
             }}>
             If you don’t have an account? {}
             <Text
+              onPress={() => {
+                navigation.navigate('Signup');
+              }}
               style={{
                 fontSize: responsiveFontSize(1.7),
                 color: colors.AppColor,
@@ -159,6 +167,7 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(0.5),
     fontSize: responsiveFontSize(1.7),
     fontWeight: '600',
+    fontFamily: 'Poppins-Regular',
   },
   signuptxt: {
     flexDirection: 'row',

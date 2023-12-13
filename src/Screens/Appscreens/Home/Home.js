@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -20,15 +21,20 @@ import CoustomTextinput from '../../../Common/Textinput/Textinput';
 import {colors} from '../../../Utlies/constant/Themes';
 import Swiper from 'react-native-swiper';
 const Data = [
-  {Img: images.categry1},
-  {Img: images.categry2},
-  {Img: images.categry3},
-  {Img: images.categry4},
-  {Img: images.categry4},
+  {Img: images.categry1, img_1: images.herbs1},
+  {Img: images.categry2, img_1: images.herbs2},
+  {Img: images.categry3, img_1: images.herbs3},
+  {Img: images.categry4, img_1: images.herbs4},
+  {Img: images.categry4, img_1: images.herbs1},
 ];
 const Home = ({navigation}) => {
   return (
-    <SafeAreaView style={{flex: 1}} edges={['bottom']}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}} edges={['bottom']}>
+      <StatusBar
+        translucent={true}
+        backgroundColor={'transparent'}
+        barStyle={'dark-content'}
+      />
       <View style={styles.header}>
         <View style={{top: responsiveHeight(4)}}>
           <FontAwesome6 name="bars-staggered" size={35} color={'#000'} />
@@ -45,111 +51,157 @@ const Home = ({navigation}) => {
         style={{
           backgroundColor: 'rgba(224, 237, 222, 0.8)',
           marginTop: responsiveHeight(3),
-          // width: responsiveWidth(90),
         }}
         inputIcon={images.search}
         tintColor={colors.AppColor}
         placeholder={'Dogs herb'}
       />
-      <ScrollView>
-        <>
-          <View
-            style={{
-              height: responsiveHeight(22),
-              width: responsiveWidth(90),
-              alignItems: 'center',
-              alignSelf: 'center',
-              marginTop: responsiveHeight(2),
-              justifyContent: 'center',
-            }}>
-            <Swiper
-              paginationStyle={{top: responsiveHeight(22)}}
-              activeDotColor={colors.AppColor}
-              activeDotStyle={{width: responsiveWidth(4)}}>
-              <View>
-                <Image
-                  source={images.dog}
-                  resizeMode="cover"
-                  style={styles.slide_1}
-                />
-              </View>
-              <View style={[styles.slide_1, {elevation: 4}]}>
-                <Image
-                  source={images.dog1}
-                  resizeMode="contain"
-                  style={styles.slide_1}
-                />
-              </View>
-              <View style={[styles.slide_1, {elevation: 4}]}>
-                <Image
-                  source={images.dog3}
-                  resizeMode="contain"
-                  style={styles.slide_1}
-                />
-              </View>
-            </Swiper>
-          </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingHorizontal: responsiveWidth(6),
-              marginTop: responsiveHeight(1),
-            }}>
-            <View>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Bold',
-                  color: '#000',
-                  fontSize: responsiveFontSize(2.2),
-                }}>
-                Categories
-              </Text>
+      <View style={{}}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: responsiveHeight(30)}}
+          style={{flexGrow: 1}}>
+          <>
+            <View
+              style={{
+                height: responsiveHeight(22),
+                width: responsiveWidth(90),
+                alignItems: 'center',
+                alignSelf: 'center',
+                marginTop: responsiveHeight(2),
+                justifyContent: 'center',
+              }}>
+              <Swiper
+                paginationStyle={{top: responsiveHeight(22)}}
+                activeDotColor={colors.AppColor}
+                activeDotStyle={{width: responsiveWidth(4)}}>
+                <View>
+                  <Image
+                    source={images.dog}
+                    resizeMode="cover"
+                    style={styles.slide_1}
+                  />
+                </View>
+                <View style={[styles.slide_1, {elevation: 4}]}>
+                  <Image
+                    source={images.dog1}
+                    resizeMode="contain"
+                    style={styles.slide_1}
+                  />
+                </View>
+                <View style={[styles.slide_1, {elevation: 4}]}>
+                  <Image
+                    source={images.dog3}
+                    resizeMode="contain"
+                    style={styles.slide_1}
+                  />
+                </View>
+              </Swiper>
             </View>
 
-            <TouchableOpacity>
-              <Text
+            <View style={styles.label_btn_contain}>
+              <View>
+                <Text style={styles.label}>Categories</Text>
+              </View>
+
+              <TouchableOpacity>
+                <Text style={styles.view_more}>View More</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={Data}
+                contentContainerStyle={{
+                  gap: responsiveWidth(5),
+                  paddingHorizontal: responsiveWidth(3),
+                  marginTop: responsiveHeight(1),
+                }}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={{flex: 1}}>
+                      <TouchableOpacity>
+                        <Image
+                          source={item.Img}
+                          resizeMode="contain"
+                          style={{
+                            height: responsiveWidth(18),
+                            width: responsiveWidth(18),
+                          }}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+
+            <View>
+              <Image
+                source={images.bannercoustom}
+                resizeMode="cover"
                 style={{
-                  color: colors.AppColor,
-                  fontSize: responsiveFontSize(1.8),
-                  fontFamily: 'Poppins-Regular',
-                }}>
-                View More
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              data={Data}
-              contentContainerStyle={{
-                gap: responsiveWidth(5),
-                paddingHorizontal: responsiveWidth(3),
-                marginTop: responsiveHeight(1),
-              }}
-              renderItem={({item, index}) => {
-                return (
-                  <View style={{flex: 1}}>
-                    <TouchableOpacity>
-                      <Image
-                        source={item.Img}
-                        resizeMode="contain"
-                        style={{
-                          height: responsiveWidth(20),
-                          width: responsiveWidth(20),
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                );
-              }}
-            />
-          </View>
-        </>
-      </ScrollView>
+                  height: responsiveHeight(22),
+                  width: responsiveWidth(90),
+                  borderRadius: responsiveWidth(5),
+                  alignSelf: 'center',
+                  marginTop: responsiveHeight(3),
+                }}
+              />
+            </View>
+            <View style={styles.label_btn_contain}>
+              <View>
+                <Text style={styles.label}>Favorite Products</Text>
+              </View>
+
+              <TouchableOpacity>
+                <Text style={styles.view_more}>View More</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{}}>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={Data}
+                contentContainerStyle={{
+                  gap: responsiveWidth(5),
+                  paddingHorizontal: responsiveWidth(3),
+                  marginTop: responsiveHeight(1),
+                }}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={{flex: 1}}>
+                      <TouchableOpacity>
+                        <Image
+                          source={item.img_1}
+                          resizeMode="contain"
+                          style={{
+                            height: responsiveWidth(23),
+                            width: responsiveWidth(23),
+                          }}
+                        />
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: responsiveFontSize(1.5),
+                              fontFamily: 'Poppins-Bold',
+                              color: '#000',
+                              marginTop: responsiveHeight(1),
+                            }}>
+                            Dogs herbs
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+          </>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -173,5 +225,22 @@ const styles = StyleSheet.create({
     height: responsiveHeight(20),
     width: responsiveWidth(90),
     borderRadius: responsiveWidth(5),
+  },
+  label: {
+    fontFamily: 'Poppins-Bold',
+    color: '#000',
+    fontSize: responsiveFontSize(2.2),
+  },
+  label_btn_contain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: responsiveWidth(6),
+    marginTop: responsiveHeight(1),
+  },
+  view_more: {
+    color: colors.AppColor,
+    fontSize: responsiveFontSize(1.8),
+    fontFamily: 'Poppins-Regular',
   },
 });

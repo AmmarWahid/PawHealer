@@ -13,7 +13,7 @@ import {images} from '../../Utlies/Images';
 import Fields from '../../Common/Fields/Fields';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const Recoverpassword = () => {
+const Recoverpassword = ({navigation}) => {
   const {
     control,
     formState: {errors},
@@ -95,6 +95,9 @@ const Recoverpassword = () => {
           bgcolor={colors.AppColor}
           text={'Recover Password'}
           textcolor={'#fff'}
+          onPress={() => {
+            navigation.navigate('Login');
+          }}
           width={responsiveWidth(80)}
           style={{
             marginTop: responsiveHeight(5),

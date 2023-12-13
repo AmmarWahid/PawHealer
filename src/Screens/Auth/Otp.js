@@ -12,7 +12,7 @@ import COTP from '../../Common/CoustomOTP/CoustomOTP';
 import {useForm} from 'react-hook-form';
 import {images} from '../../Utlies/Images';
 
-const Otp = () => {
+const Otp = ({navigation}) => {
   const {
     formState: {errors, defaultValues},
     control,
@@ -49,6 +49,9 @@ const Otp = () => {
           bgcolor={colors.AppColor}
           text={'Verify'}
           textcolor={'#fff'}
+          onPress={() => {
+            navigation.navigate('Recoverpassword');
+          }}
           self
           height={responsiveHeight(5)}
           width={responsiveWidth(60)}

@@ -35,4 +35,9 @@ export const images = {
   categry3: require('./../Assets/categry3.png'),
   categry4: require('./../Assets/categry4.png'),
   categry5: require('./../Assets/categry5.png'),
+  herbs1: require('./../Assets/home1.png'),
+  herbs2: require('./../Assets/home2.png'),
+  herbs3: require('./../Assets/home3.png'),
+  herbs4: require('./../Assets/home4.png'),
+  bannercoustom: require('./../Assets/bannercoustom.png'),
 };

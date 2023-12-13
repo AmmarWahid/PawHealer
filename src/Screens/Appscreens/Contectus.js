@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   },
   content: {
     marginHorizontal: responsiveWidth(5),
-    paddingHorizontal: responsiveWidth(4.5),
+    // paddingHorizontal: responsiveWidth(0),
     paddingVertical: responsiveHeight(1),
     overflow: 'hidden',
   },

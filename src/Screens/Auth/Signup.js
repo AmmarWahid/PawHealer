@@ -26,7 +26,7 @@ import {AvoidSoftInput} from 'react-native-avoid-softinput';
 import CoustomButton from '../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../Utlies/constant/Themes';
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const {
     control,
     formState: {errors},

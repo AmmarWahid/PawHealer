@@ -54,6 +54,7 @@ const Sentcode = ({navigation}) => {
         <View>
           <CoustomButton
             bgcolor={colors.AppColor}
+            onPress={() => navigation.navigate('Otp')}
             text={'Go to Email'}
             textcolor={'#fff'}
             width={responsiveWidth(80)}
