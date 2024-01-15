@@ -60,7 +60,7 @@ const Recoverpassword = ({navigation}) => {
           placeholder={'New Password'}
           inputIcon={images.passwordIcon}
           secureTextEntry={true}
-          inputWidht={responsiveWidth(80)}
+          // inputWidht={responsiveWidth()}
           alignSelf
           rules={{
             required: {value: true, message: 'Please enter Password...'},
@@ -77,7 +77,7 @@ const Recoverpassword = ({navigation}) => {
           placeholder={'Confirm New Password'}
           inputIcon={images.passwordIcon}
           secureTextEntry={true}
-          inputWidht={responsiveWidth(80)}
+          // inputWidht={responsiveWidth(80)}
           style={{
             marginTop: responsiveHeight(2),
             backgroundColor: 'rgba(224, 237, 222, 0.8)',
