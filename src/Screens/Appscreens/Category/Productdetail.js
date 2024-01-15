@@ -24,7 +24,7 @@ import Fields from '../../../Common/Fields/Fields';
 import {useForm} from 'react-hook-form';
 import StarRating from 'react-native-star-rating-widget';
 
-const Productdetail = () => {
+const Productdetail = ({navigation}) => {
   const [selected, setSelected] = useState(0);
   const btns = useCallback(val => {
     setSelected(val);
@@ -47,207 +47,217 @@ const Productdetail = () => {
         backgroundColor={'transparent'}
         barStyle={'light-content'}
       />
-      <Header Heading={'Product Detail'} color={'#fff'} />
-      <ScrollView>
-        <View style={styles.Swiper_contain}>
-          <Swiper paginationStyle={{marginRight: responsiveWidth(50)}}>
-            <View style={styles.slide1}>
-              <Image
-                source={images.mask}
-                resizeMode="contain"
-                style={styles.slide_img}
-              />
-            </View>
-            <View style={styles.slide1}>
-              <Image
-                source={images.mask}
-                resizeMode="contain"
-                style={styles.slide_img}
-              />
-            </View>
-            <View style={styles.slide1}>
-              <Image
-                source={images.mask}
-                resizeMode="contain"
-                style={styles.slide_img}
-              />
-            </View>
-          </Swiper>
-        </View>
-        <View style={styles.heading_contain}>
-          <Text style={styles.heading}>Clears Bladder Damp-Heat</Text>
-          <Text style={styles.price}>$45</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: responsiveWidth(7),
-            marginHorizontal: responsiveWidth(6.1),
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              btns(0);
-            }}>
-            <Text
-              style={[
-                styles.discColor,
-                {color: selected == 0 ? colors.AppColor : '#000'},
-              ]}>
-              Description
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              btns(1);
-            }}>
-            <Text
-              style={[
-                styles.discColor,
-                {color: selected == 1 ? colors.AppColor : '#000'},
-              ]}>
-              Review
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/* description_contain */}
-
-        {selected === 0 && (
-          <View>
-            <Text style={styles.txt}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-              vel ex sit amet neque dignissim mattis non eu est. Etiam pulvinar
-              est mi, et porta magna accumsan nec.
-            </Text>
-
-            <View style={styles.heading_contain}>
-              <View style={styles.btn}>
-                <TouchableOpacity>
-                  <Image
-                    resizeMode="contain"
-                    source={images.minus}
-                    style={{
-                      height: responsiveWidth(6),
-                      width: responsiveWidth(6),
-                    }}
-                  />
-                </TouchableOpacity>
-                <View>
-                  <Text style={styles.btn_txt}>1</Text>
-                </View>
-                <TouchableOpacity>
-                  <Image
-                    resizeMode="contain"
-                    source={images.pluscart}
-                    style={{
-                      height: responsiveWidth(6),
-                      width: responsiveWidth(6),
-                      zIndex: 9999,
-                    }}
-                  />
-                </TouchableOpacity>
+      <Header
+        Heading={'Product Detail'}
+        color={'#fff'}
+        navigation={() => navigation.goBack()}
+      />
+      <View style={{marginBottom: responsiveHeight(5)}}>
+        <ScrollView>
+          <View style={styles.Swiper_contain}>
+            <Swiper paginationStyle={{marginRight: responsiveWidth(50)}}>
+              <View style={styles.slide1}>
+                <Image
+                  source={images.mask}
+                  resizeMode="contain"
+                  style={styles.slide_img}
+                />
               </View>
-
-              <View>
-                <Text style={styles.heading}>Total : $35.99/ea</Text>
+              <View style={styles.slide1}>
+                <Image
+                  source={images.mask}
+                  resizeMode="contain"
+                  style={styles.slide_img}
+                />
               </View>
-            </View>
-            <View>
-              <CoustomButton
-                bgcolor={colors.AppColor}
-                fontFamily={'Poppins-Bold'}
-                text={'Continue to Checkout'}
-                textcolor={'#ffff'}
-                style={{
-                  height: responsiveHeight(6.5),
-                  marginTop: responsiveHeight(1),
-                  marginHorizontal: responsiveWidth(6),
-                }}
-              />
-            </View>
+              <View style={styles.slide1}>
+                <Image
+                  source={images.mask}
+                  resizeMode="contain"
+                  style={styles.slide_img}
+                />
+              </View>
+            </Swiper>
           </View>
-        )}
-        {/* ==>>>>>>>><<<<<<<======= */}
-        {/* review contain */}
-        {selected === 1 && (
-          <View>
-            <View
-              style={{
-                marginHorizontal: responsiveWidth(6),
-                gap: responsiveHeight(1),
+          <View style={styles.heading_contain}>
+            <Text style={styles.heading}>Clears Bladder Damp-Heat</Text>
+            <Text style={styles.price}>$45</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: responsiveWidth(7),
+              marginHorizontal: responsiveWidth(6.1),
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                btns(0);
               }}>
-              <Fields
-                letterSpacing={0.5}
-                error={errors}
-                errorcolor={'red'}
-                control={control}
-                name={'ShortDiscription'}
-                style={{
-                  backgroundColor: 'rgba(224, 237, 222, 0.8)',
-                  marginTop: responsiveHeight(1.5),
-                  height: responsiveHeight(10),
-                }}
-                multiline={true}
-                inputstyle={{
-                  height: responsiveHeight(10),
-                  fontSize: responsiveFontSize(1.4),
-                }}
-                placeholder={'Short-Discription'}
-                textbgcolor={'#000'}
-              />
-              <Fields
-                letterSpacing={0.5}
-                error={errors}
-                errorcolor={'red'}
-                control={control}
-                name={'longDiscription'}
-                style={{
-                  backgroundColor: 'rgba(224, 237, 222, 0.8)',
-                  marginTop: responsiveHeight(1.5),
-                  height: responsiveHeight(15),
-                }}
-                multiline={true}
-                inputstyle={{
-                  height: responsiveHeight(15),
-                  fontSize: responsiveFontSize(1.4),
-                }}
-                placeholder={'Long-Discription'}
-                textbgcolor={'#000'}
-              />
-              <View style={styles.star_contain}>
-                <Text style={[styles.heading, {top: responsiveHeight(0.2)}]}>
-                  Review
-                </Text>
-                <StarRating
-                  rating={rating}
-                  onChange={value => setRating(value)}
-                  // activeColor=""
-                  activeSize={20}
-                  // inactiveColor="#fff"
-                  inactiveSize={20}
-                  spacing={2}
-                  fillAnimation={false}
-                  enableSwiping={false}
-                  starStyle={{marginHorizontal: -1, opacity: 0.9}}
-                  color="orange"
-                  animationConfig={{
-                    delay: 100,
-                    duration: 100,
-                    scale: 1,
+              <Text
+                style={[
+                  styles.discColor,
+                  {color: selected == 0 ? colors.AppColor : '#000'},
+                ]}>
+                Description
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                btns(1);
+              }}>
+              <Text
+                style={[
+                  styles.discColor,
+                  {color: selected == 1 ? colors.AppColor : '#000'},
+                ]}>
+                Review
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* description_contain */}
+
+          {selected === 0 && (
+            <View>
+              <Text style={styles.txt}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
+                vel ex sit amet neque dignissim mattis non eu est. Etiam
+                pulvinar est mi, et porta magna accumsan nec.
+              </Text>
+
+              <View style={styles.heading_contain}>
+                <View style={styles.btn}>
+                  <TouchableOpacity>
+                    <Image
+                      resizeMode="contain"
+                      source={images.minus}
+                      style={{
+                        height: responsiveWidth(6),
+                        width: responsiveWidth(6),
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View>
+                    <Text style={styles.btn_txt}>1</Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Image
+                      resizeMode="contain"
+                      source={images.pluscart}
+                      style={{
+                        height: responsiveWidth(6),
+                        width: responsiveWidth(6),
+                        zIndex: 9999,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <Text style={styles.heading}>Total : $35.99/ea</Text>
+                </View>
+              </View>
+              <View>
+                <CoustomButton
+                  bgcolor={colors.AppColor}
+                  fontFamily={'Poppins-Bold'}
+                  text={'Add to cart'}
+                  textcolor={'#ffff'}
+                  onPress={() => {
+                    navigation.goBack();
                   }}
-                  enableHalfStar={false}
+                  style={{
+                    height: responsiveHeight(6.5),
+                    marginTop: responsiveHeight(1),
+                    marginHorizontal: responsiveWidth(6),
+                    marginBottom: responsiveHeight(10),
+                  }}
                 />
               </View>
             </View>
+          )}
+          {/* ==>>>>>>>><<<<<<<======= */}
+          {/* review contain */}
+          {selected === 1 && (
+            <View>
+              <View
+                style={{
+                  marginHorizontal: responsiveWidth(6),
+                  gap: responsiveHeight(1),
+                }}>
+                <Fields
+                  letterSpacing={0.5}
+                  error={errors}
+                  errorcolor={'red'}
+                  control={control}
+                  name={'ShortDiscription'}
+                  style={{
+                    backgroundColor: 'rgba(224, 237, 222, 0.8)',
+                    marginTop: responsiveHeight(1.5),
+                    height: responsiveHeight(10),
+                  }}
+                  multiline={true}
+                  inputstyle={{
+                    height: responsiveHeight(10),
+                    fontSize: responsiveFontSize(1.4),
+                  }}
+                  placeholder={'Short-Discription'}
+                  textbgcolor={'#000'}
+                />
+                <Fields
+                  letterSpacing={0.5}
+                  error={errors}
+                  errorcolor={'red'}
+                  control={control}
+                  name={'longDiscription'}
+                  style={{
+                    backgroundColor: 'rgba(224, 237, 222, 0.8)',
+                    marginTop: responsiveHeight(1.5),
+                    height: responsiveHeight(15),
+                  }}
+                  multiline={true}
+                  inputstyle={{
+                    height: responsiveHeight(15),
+                    fontSize: responsiveFontSize(1.4),
+                  }}
+                  placeholder={'Long-Discription'}
+                  textbgcolor={'#000'}
+                />
+                <View style={styles.star_contain}>
+                  <Text style={[styles.heading, {top: responsiveHeight(0.2)}]}>
+                    Review
+                  </Text>
+                  <StarRating
+                    rating={rating}
+                    onChange={value => setRating(value)}
+                    // activeColor=""
+                    activeSize={20}
+                    // inactiveColor="#fff"
+                    inactiveSize={20}
+                    spacing={2}
+                    fillAnimation={false}
+                    enableSwiping={false}
+                    starStyle={{marginHorizontal: -1, opacity: 0.9}}
+                    color="orange"
+                    animationConfig={{
+                      delay: 100,
+                      duration: 100,
+                      scale: 1,
+                    }}
+                    enableHalfStar={false}
+                  />
+                </View>
+              </View>
 
-            <CoustomButton
-              bgcolor={colors.AppColor}
-              text={'Send Request'}
-              style={styles.coustombtn}
-              textcolor={'#fff'}
-            />
-          </View>
-        )}
-      </ScrollView>
+              <CoustomButton
+                bgcolor={colors.AppColor}
+                text={'Send Request'}
+                style={styles.coustombtn}
+                textcolor={'#fff'}
+              />
+            </View>
+          )}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -333,6 +343,7 @@ const styles = StyleSheet.create({
     marginVertical: responsiveHeight(2),
     height: responsiveHeight(6),
     marginHorizontal: responsiveWidth(6),
+    marginBottom: responsiveHeight(10),
   },
   star_contain: {
     flexDirection: 'row',

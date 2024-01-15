@@ -8,7 +8,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
-const Quality = () => {
+const Quality = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -18,7 +18,13 @@ const Quality = () => {
       />
       <View style={{flex: 0.17}}>
         <View style={{height: '100%'}}>
-          <Header Heading={'Quality and Safety'} color={'#fff'} />
+          <Header
+            Heading={'Quality and Safety'}
+            color={'#fff'}
+            navigation={() => {
+              navigation.goBack();
+            }}
+          />
         </View>
       </View>
       <View style={styles.content_container}>

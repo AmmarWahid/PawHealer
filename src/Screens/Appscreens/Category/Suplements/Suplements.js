@@ -20,7 +20,7 @@ import Header from '../../../../Components/Header';
 import {images} from '../../../../Utlies/Images';
 import {colors} from '../../../../Utlies/constant/Themes';
 
-const Supplements = () => {
+const Supplements = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -28,123 +28,139 @@ const Supplements = () => {
         backgroundColor={'transparent'}
         barStyle={'light-content'}
       />
-      <Header Heading={'Supplements'} color={'#fff'} />
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: responsiveHeight(2),
-        }}
-        style={{
-          marginTop: responsiveHeight(2),
-          paddingBottom: 15,
-          zIndex: 999999,
-        }}>
-        <View
+      <Header
+        Heading={'Supplements'}
+        color={'#fff'}
+        navigation={() => navigation.navigate('HomeScreen')}
+      />
+      <View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: responsiveHeight(2),
+          }}
           style={{
-            justifyContent: 'space-between',
+            marginTop: responsiveHeight(2),
+            paddingBottom: responsiveHeight(15),
+            zIndex: 999999,
           }}>
-          <View>
-            <View style={styles.labelContainer}>
-              <Text style={styles.label}>Nutritionals</Text>
-              <TouchableOpacity>
-                <Text style={styles.viewMore}>View More</Text>
-              </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'space-between',
+            }}>
+            <View>
+              <View style={styles.labelContainer}>
+                <Text style={styles.label}>Nutritionals</Text>
+                <TouchableOpacity>
+                  <Text style={styles.viewMore}>View More</Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  maxHeight: responsiveHeight(32.5),
+                }}>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={[1, 2, 3]}
+                  contentContainerStyle={styles.bladder}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View style={styles.containerItem}>
+                        <View style={styles.imageContainer}>
+                          <Image
+                            source={images.mask}
+                            resizeMode="contain"
+                            style={styles.image}
+                          />
+                        </View>
+                        <Text style={styles.itemName}>Cough Center</Text>
+                        <View style={styles.priceIcon}>
+                          <Text style={styles.price}>$12.00</Text>
+                          <Image
+                            resizeMode="contain"
+                            source={images.heart}
+                            style={styles.heartIcon}
+                          />
+                        </View>
+                        <TouchableOpacity
+                          style={styles.plus}
+                          onPress={() => {
+                            navigation.navigate('Productdetail');
+                          }}>
+                          <Image
+                            resizeMode="contain"
+                            source={images.plus}
+                            style={styles.icon}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }}
+                />
+              </View>
             </View>
-            <View
-              style={{
-                maxHeight: responsiveHeight(32.5),
-              }}>
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={[1, 2, 3]}
-                contentContainerStyle={styles.bladder}
-                renderItem={({item, index}) => {
-                  return (
-                    <View style={styles.containerItem}>
-                      <View style={styles.imageContainer}>
-                        <Image
-                          source={images.mask}
-                          resizeMode="contain"
-                          style={styles.image}
-                        />
-                      </View>
-                      <Text style={styles.itemName}>Cough Center</Text>
-                      <View style={styles.priceIcon}>
-                        <Text style={styles.price}>$12.00</Text>
-                        <Image
-                          resizeMode="contain"
-                          source={images.heart}
-                          style={styles.heartIcon}
-                        />
-                      </View>
-                      <View style={styles.plus}>
-                        <Image
-                          resizeMode="contain"
-                          source={images.plus}
-                          style={styles.icon}
-                        />
-                      </View>
-                    </View>
-                  );
-                }}
-              />
-            </View>
-          </View>
 
-          <View>
-            <View
-              style={[styles.labelContainer, {marginTop: responsiveHeight(5)}]}>
-              <Text style={styles.label}>Hip and Joint Saver</Text>
-              <TouchableOpacity>
-                <Text style={styles.viewMore}>View More</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                // backgroundColor: 'yellow',
-                maxHeight: responsiveHeight(32.5),
-              }}>
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={[1, 2, 3]}
-                contentContainerStyle={styles.bladder}
-                renderItem={({item, index}) => {
-                  return (
-                    <View style={styles.containerItem}>
-                      <View style={styles.imageContainer}>
-                        <Image
-                          source={images.mask}
-                          resizeMode="contain"
-                          style={styles.image}
-                        />
+            <View>
+              <View
+                style={[
+                  styles.labelContainer,
+                  {marginTop: responsiveHeight(5)},
+                ]}>
+                <Text style={styles.label}>Hip and Joint Saver</Text>
+                <TouchableOpacity>
+                  <Text style={styles.viewMore}>View More</Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  // backgroundColor: 'yellow',
+                  maxHeight: responsiveHeight(32.5),
+                }}>
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={[1, 2, 3]}
+                  contentContainerStyle={styles.bladder}
+                  renderItem={({item, index}) => {
+                    return (
+                      <View style={styles.containerItem}>
+                        <View style={styles.imageContainer}>
+                          <Image
+                            source={images.mask}
+                            resizeMode="contain"
+                            style={styles.image}
+                          />
+                        </View>
+                        <Text style={styles.itemName}>Cough Center</Text>
+                        <View style={styles.priceIcon}>
+                          <Text style={styles.price}>$12.00</Text>
+                          <Image
+                            resizeMode="contain"
+                            source={images.heart}
+                            style={styles.heartIcon}
+                          />
+                        </View>
+                        <TouchableOpacity
+                          style={styles.plus}
+                          onPress={() => {
+                            navigation.navigate('Productdetail');
+                          }}>
+                          <Image
+                            resizeMode="contain"
+                            source={images.plus}
+                            style={styles.icon}
+                          />
+                        </TouchableOpacity>
                       </View>
-                      <Text style={styles.itemName}>Cough Center</Text>
-                      <View style={styles.priceIcon}>
-                        <Text style={styles.price}>$12.00</Text>
-                        <Image
-                          resizeMode="contain"
-                          source={images.heart}
-                          style={styles.heartIcon}
-                        />
-                      </View>
-                      <View style={styles.plus}>
-                        <Image
-                          resizeMode="contain"
-                          source={images.plus}
-                          style={styles.icon}
-                        />
-                      </View>
-                    </View>
-                  );
-                }}
-              />
+                    );
+                  }}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

@@ -40,4 +40,12 @@ export const images = {
   herbs3: require('./../Assets/home3.png'),
   herbs4: require('./../Assets/home4.png'),
   bannercoustom: require('./../Assets/bannercoustom.png'),
+  drawer1: require('./../Assets/drawer1.png'),
+  drawer2: require('./../Assets/drawer2.png'),
+  drawer3: require('./../Assets/drawer3.png'),
+  drawer4: require('./../Assets/drawer4.png'),
+  drawer5: require('./../Assets/drawer5.png'),
+  card1: require('./../Assets/card11.png'),
+  card2: require('./../Assets/card12.png'),
+  card3: require('./../Assets/card13.png'),
 };

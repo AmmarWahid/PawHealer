@@ -21,11 +21,11 @@ import CoustomTextinput from '../../../Common/Textinput/Textinput';
 import {colors} from '../../../Utlies/constant/Themes';
 import Swiper from 'react-native-swiper';
 const Data = [
-  {Img: images.categry1, img_1: images.herbs1},
-  {Img: images.categry2, img_1: images.herbs2},
-  {Img: images.categry3, img_1: images.herbs3},
-  {Img: images.categry4, img_1: images.herbs4},
-  {Img: images.categry4, img_1: images.herbs1},
+  {id: 1, Img: images.categry1, img_1: images.herbs1},
+  {id: 2, Img: images.categry3, img_1: images.herbs2},
+  {id: 3, Img: images.categry4, img_1: images.herbs3},
+  {id: 4, Img: images.categry2, img_1: images.herbs4},
+  {id: 5, Img: images.categry5, img_1: images.herbs1},
 ];
 const Home = ({navigation}) => {
   return (
@@ -36,9 +36,13 @@ const Home = ({navigation}) => {
         barStyle={'dark-content'}
       />
       <View style={styles.header}>
-        <View style={{top: responsiveHeight(4)}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+          style={{top: responsiveHeight(4)}}>
           <FontAwesome6 name="bars-staggered" size={35} color={'#000'} />
-        </View>
+        </TouchableOpacity>
         <Image
           source={images.Applogo}
           resizeMode="contain"
@@ -122,7 +126,20 @@ const Home = ({navigation}) => {
                 renderItem={({item, index}) => {
                   return (
                     <View style={{flex: 1}}>
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          item.id === 1
+                            ? navigation.navigate('Dog')
+                            : item.id === 2
+                            ? navigation.navigate('Catherb')
+                            : item.id === 3
+                            ? navigation.navigate('Products')
+                            : item.id === 4
+                            ? alert('on working')
+                            : item.id === 5
+                            ? navigation.navigate('Supplements')
+                            : null;
+                        }}>
                         <Image
                           source={item.Img}
                           resizeMode="contain"

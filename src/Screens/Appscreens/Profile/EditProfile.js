@@ -16,7 +16,7 @@ import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../../Utlies/constant/Themes';
 import {DiscriptionText} from '../../../Common/Coustomtext/Index';
 
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
   const {
     control,
     handleSubmit,
@@ -31,7 +31,13 @@ const EditProfile = () => {
       />
 
       <View style={{flex: 0.17}}>
-        <Header Heading={'Edit Profile'} color={'#fff'} />
+        <Header
+          Heading={'Edit Profile'}
+          color={'#fff'}
+          navigation={() => {
+            navigation.goBack();
+          }}
+        />
       </View>
       <View style={styles.profilehead}>
         <View
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
   },
   btncontain: {
     borderWidth: responsiveWidth(0.1),
-    marginHorizontal: responsiveWidth(5),
+    marginHorizontal: responsiveWidth(3),
     height: '100%',
     borderRadius: responsiveWidth(3),
     paddingVertical: responsiveHeight(1.2),
@@ -163,6 +169,7 @@ const styles = StyleSheet.create({
     height: responsiveWidth(10),
     paddingLeft: responsiveWidth(1),
     marginTop: responsiveHeight(1.5),
+
     opacity: 0.8,
   },
   txtEdit1: {

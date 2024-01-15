@@ -11,7 +11,7 @@ import {images} from '../../Utlies/Images';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {colors} from '../../Utlies/constant/Themes';
 
-const Notification = () => {
+const Notification = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -19,15 +19,22 @@ const Notification = () => {
         backgroundColor={'transparent'}
         barStyle={'light-content'}
       />
-      <View style={{flex: 0.17}}>
-        <Header Heading={'Notification'} color={'#fff'} />
-      </View>
+
+      <Header
+        Heading={'Notification'}
+        color={'#fff'}
+        navigation={() => {
+          navigation.goBack();
+        }}
+      />
+
       <View style={styles.headingcontain}>
         <Text style={styles.heading}> New Notification</Text>
       </View>
-      <View style={{flex: 0.74}}>
+      <View style={{flex: 1}}>
         <FlatList
           data={[0, 1, 2, 3, 4, 5, 6]}
+          style={{}}
           renderItem={({item, index}) => {
             return (
               <View style={{flex: 1}}>
@@ -56,6 +63,7 @@ const Notification = () => {
             );
           }}
         />
+        {/* <View></View> */}
       </View>
     </SafeAreaView>
   );
