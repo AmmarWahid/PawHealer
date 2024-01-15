@@ -8,7 +8,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
-const Privacy = () => {
+const Privacy = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -18,7 +18,13 @@ const Privacy = () => {
       />
       <View style={{flex: 0.17}}>
         <View style={{height: '100%'}}>
-          <Header Heading={'Privacy Policy'} color={'#fff'} />
+          <Header
+            Heading={'Privacy Policy'}
+            color={'#fff'}
+            navigation={() => {
+              navigation.goBack();
+            }}
+          />
         </View>
       </View>
       <View style={styles.content_container}>

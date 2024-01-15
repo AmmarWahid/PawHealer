@@ -1,4 +1,11 @@
-import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../Components/Header';
@@ -10,7 +17,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {images} from '../../../Utlies/Images';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -19,35 +26,42 @@ const Profile = () => {
         barStyle={'light-content'}
       />
 
-      <View style={{flex: 0.17}}>
-        <Header Heading={'Profile'} color={'#fff'} />
-      </View>
-      <View style={styles.profilehead}>
-        <View style={styles.profilecontain}>
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: responsiveWidth(5),
-              alignItems: 'center',
-            }}>
-            <View>
-              <Image source={Dummy} style={styles.profileimg} />
-            </View>
-            <View>
-              <Text style={styles.name}>Elena Thompson</Text>
-              <Text style={styles.nametxt}>@elena,thompson</Text>
-            </View>
+      <Header
+        Heading={'Profile'}
+        color={'#fff'}
+        navigation={() => navigation.goBack()}
+      />
+
+      <View style={styles.profilecontain}>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: responsiveWidth(5),
+            alignItems: 'center',
+          }}>
+          <View>
+            <Image source={Dummy} style={styles.profileimg} />
+          </View>
+          <View>
+            <Text style={styles.name}>Elena Thompson</Text>
+            <Text style={styles.nametxt}>@elena,thompson</Text>
           </View>
         </View>
       </View>
+
       <View
         style={{
-          flex: 0.41,
+          // flex: 0.43,
+          height: '40%',
           //   backgroundColor: 'red',
           paddingTop: responsiveHeight(3),
         }}>
         <View style={styles.btncontain}>
-          <View style={styles.btnicontxt_contain}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditProfile');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.editprofile} style={styles.btnicon} />
 
@@ -56,8 +70,12 @@ const Profile = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Notification');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.notification} style={styles.btnicon} />
 
@@ -66,8 +84,8 @@ const Profile = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.delete} style={styles.btnicon} />
 
@@ -77,8 +95,8 @@ const Profile = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.logout} style={styles.btnicon} />
 
@@ -88,7 +106,7 @@ const Profile = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -103,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   profilehead: {
-    flex: 0.23,
+    height: '17%',
     paddingTop: responsiveHeight(3),
   },
   profilecontain: {
@@ -111,9 +129,9 @@ const styles = StyleSheet.create({
     marginHorizontal: responsiveWidth(5),
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: responsiveWidth(10),
-    height: '100%',
-    borderRadius: responsiveWidth(5),
+    paddingVertical: responsiveWidth(6),
+    marginTop: responsiveHeight(3),
+    borderRadius: responsiveWidth(3),
   },
   name: {
     fontSize: responsiveFontSize(2.7),
@@ -134,7 +152,7 @@ const styles = StyleSheet.create({
   btncontain: {
     borderWidth: responsiveWidth(0.1),
     marginHorizontal: responsiveWidth(5),
-    height: '100%',
+    // height: '100%',
     borderRadius: responsiveWidth(3),
     paddingVertical: responsiveHeight(2),
   },

@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, StatusBar, FlatList, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import Header from '../../../Components/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -11,7 +19,7 @@ import {
 import {images} from '../../../Utlies/Images';
 import {colors} from '../../../Utlies/constant/Themes';
 
-const Favorites = () => {
+const Favorites = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar
@@ -23,12 +31,13 @@ const Favorites = () => {
       <Header Heading={'Favorites'} color={'#fff'} />
       <View
         style={{
-          flex: 0.98,
+          // flex: 0.99,
           marginTop: responsiveHeight(2),
           backgroundColor: 'transparent',
         }}>
         <FlatList
           data={[1, 2, 3, 4, 6]}
+          contentContainerStyle={{paddingBottom: responsiveHeight(10)}}
           renderItem={({item, index}) => {
             return (
               <View style={styles.data_container}>
@@ -52,7 +61,11 @@ const Favorites = () => {
                     </View>
                     <View style={styles.rate_btn_contain}>
                       <Text style={styles.rate}>$180.00</Text>
-                      <View style={styles.btn}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('Productdetail');
+                        }}
+                        style={styles.btn}>
                         <View>
                           <Image
                             resizeMode="contain"
@@ -66,7 +79,7 @@ const Favorites = () => {
                         <View>
                           <Text style={styles.btn_txt}>Add to card</Text>
                         </View>
-                      </View>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
@@ -85,19 +98,22 @@ const styles = StyleSheet.create({
   data_container: {flex: 1, justifyContent: 'center'},
   data_content: {
     height: responsiveHeight(19),
+    // height: '90%',
+
     backgroundColor: '#fff',
     elevation: 10,
-    marginVertical: responsiveHeight(1.5),
-    marginHorizontal: responsiveWidth(5),
+    marginVertical: responsiveHeight(1),
+    marginHorizontal: responsiveWidth(3),
     borderRadius: responsiveWidth(2),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: responsiveWidth(3),
+    gap: responsiveWidth(5),
   },
   fav_img: {
-    width: responsiveWidth(25),
-    height: responsiveHeight(15),
+    width: responsiveWidth(29),
+    paddingVertical: responsiveHeight(2.5),
+    // height: responsiveWidth(2),
     borderWidth: responsiveWidth(0.2),
     borderColor: colors.AppColor,
     backgroundColor: '#fff',
@@ -118,7 +134,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   right_content: {
-    gap: responsiveHeight(2.2),
+    gap: responsiveHeight(2.6),
     height: responsiveHeight(15),
   },
   disc: {
@@ -128,7 +144,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: responsiveHeight(5),
-    width: responsiveWidth(30),
+    width: responsiveWidth(35),
+    // paddingHorizontal: responsiveWidth(),
     borderRadius: responsiveWidth(1),
     backgroundColor: colors.AppColor,
     overflow: 'hidden',
@@ -141,7 +158,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: responsiveWidth(12),
+    gap: responsiveWidth(6),
+    paddingTop: responsiveWidth(2),
   },
   btn_txt: {
     color: '#fff',

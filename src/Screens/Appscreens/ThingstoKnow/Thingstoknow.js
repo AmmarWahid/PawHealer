@@ -1,4 +1,11 @@
-import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../Components/Header';
@@ -10,7 +17,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {images} from '../../../Utlies/Images';
 
-const Thinkstoknow = () => {
+const Thinkstoknow = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -29,7 +36,11 @@ const Thinkstoknow = () => {
           paddingTop: responsiveHeight(3),
         }}>
         <View style={styles.btncontain}>
-          <View style={styles.btnicontxt_contain}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Quality');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.quality} style={styles.btnicon} />
 
@@ -38,8 +49,12 @@ const Thinkstoknow = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Shipping');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.shipping} style={styles.btnicon} />
 
@@ -48,8 +63,12 @@ const Thinkstoknow = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Return');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.return} style={styles.btnicon} />
 
@@ -59,8 +78,12 @@ const Thinkstoknow = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
-          <View style={styles.btnicontxt_contain}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Privacy');
+            }}
+            style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.Privacy} style={styles.btnicon} />
 
@@ -70,7 +93,7 @@ const Thinkstoknow = () => {
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

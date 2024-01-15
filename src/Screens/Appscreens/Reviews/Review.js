@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, FlatList, StatusBar, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -32,7 +40,7 @@ const Review = ({navigation}) => {
     },
     [rating],
   );
-  console.log(rating);
+  // console.log(rating);
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar
@@ -41,7 +49,11 @@ const Review = ({navigation}) => {
         barStyle={'light-content'}
       />
 
-      <Header Heading={'Reviews'} color={'#fff'} />
+      <Header
+        Heading={'Reviews'}
+        color={'#fff'}
+        navigation={() => navigation.goBack()}
+      />
 
       <View>
         <FlatList
@@ -91,13 +103,18 @@ const Review = ({navigation}) => {
                         Christa Gleadhill, CO
                       </Text>
                     </View>
-                    <Image
-                      source={images.ThreeDot}
-                      resizeMode="contain"
-                      style={{
-                        width: responsiveWidth(5),
-                      }}
-                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('ReviewsDetail');
+                      }}>
+                      <Image
+                        source={images.ThreeDot}
+                        resizeMode="contain"
+                        style={{
+                          width: responsiveWidth(5),
+                        }}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View
                     style={{

@@ -19,7 +19,7 @@ import dummy from './../../../Assets/Dummy.jpg';
 import StarRating from 'react-native-star-rating-widget';
 import Dog from './../../../Assets/Dog.jpg';
 import {colors} from '../../../Utlies/constant/Themes';
-const ReviewsDetail = () => {
+const ReviewsDetail = ({navigation}) => {
   const placeholderData = Array(5).fill({});
   const initialRatings = Array(placeholderData.length).fill(0);
   const [rating, setRating] = useState(initialRatings);
@@ -31,7 +31,11 @@ const ReviewsDetail = () => {
         barStyle={'light-content'}
       />
 
-      <Header Heading={'Reviews'} color={'#fff'} />
+      <Header
+        Heading={'Reviews'}
+        color={'#fff'}
+        navigation={() => navigation.goBack()}
+      />
       <View
         style={{
           flex: 1,

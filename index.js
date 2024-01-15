@@ -29,5 +29,6 @@ import Mycart from './src/Screens/Appscreens/MyCart/Mycart';
 import Productdetail from './src/Screens/Appscreens/Category/Productdetail';
 import Routes from './src/Stacks';
 import MyOrder from './src/Screens/Appscreens/MyOrder/MyOrder';
+import Checkout from './src/Screens/Appscreens/Checkout/Checkout';
 
 AppRegistry.registerComponent(appName, () => Routes);

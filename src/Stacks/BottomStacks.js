@@ -32,6 +32,7 @@ const HomeStack = () => {
       <Stack.Screen name="Catherb" component={Catherb} />
       <Stack.Screen name="Dog" component={Dog} />
       <Stack.Screen name="Supplements" component={Supplements} />
+      <Stack.Screen name="Productdetail" component={Productdetail} />
     </Stack.Navigator>
   );
 };
@@ -40,7 +41,6 @@ const FavStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Favorites" component={Favorites} />
-      <Stack.Screen name="Productdetail" component={Productdetail} />
     </Stack.Navigator>
   );
 };

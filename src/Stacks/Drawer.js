@@ -16,6 +16,17 @@ import Privacy from '../Screens/Appscreens/ThingstoKnow/Privacy';
 import Quality from '../Screens/Appscreens/ThingstoKnow/Quality';
 import Return from '../Screens/Appscreens/ThingstoKnow/Return';
 import Shipping from '../Screens/Appscreens/ThingstoKnow/Shipping';
+import Coustom from './Coustom';
+import {colors} from '../Utlies/constant/Themes';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {Image} from 'react-native';
+import {images} from '../Utlies/Images';
+import Productdetail from '../Screens/Appscreens/Category/Productdetail';
+import Checkout from '../Screens/Appscreens/Checkout/Checkout';
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 const ReviewStack = () => {
@@ -37,9 +48,30 @@ const ThingsStack = () => {
     </Stack.Navigator>
   );
 };
+
 function DrawerStacks() {
   return (
-    <Drawer.Navigator screenOptions={{headerShown: false}}>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        drawerActiveBackgroundColor: colors.AppColor,
+        drawerActiveTintColor: '#fff',
+        // drawerInactiveTintColor: colors.AppColor,
+        drawerItemStyle: {
+          width: '100%',
+          paddingLeft: responsiveWidth(3),
+          // height: responsiveHeight(8),
+          borderTopLeftRadius: responsiveWidth(10),
+          borderBottomLeftRadius: responsiveWidth(10),
+        },
+        drawerLabelStyle: {
+          fontSize: responsiveFontSize(1.7),
+          fontFamily: 'Poppins-Regular',
+        },
+
+        unmountOnBlur: true,
+      }}
+      drawerContent={props => <Coustom {...props} />}>
       <Drawer.Screen
         name="TabStacks"
         component={TabStacks}
@@ -54,6 +86,18 @@ function DrawerStacks() {
         component={ReviewStack}
         options={{
           drawerLabel: 'Reviews',
+          drawerIcon: ({focused, color}) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                width: responsiveWidth(8),
+                height: responsiveWidth(10),
+
+                tintColor: focused ? '#fff' : colors.AppColor,
+              }}
+              source={images.drawer1}
+            />
+          ),
         }}
       />
       <Drawer.Screen
@@ -61,6 +105,17 @@ function DrawerStacks() {
         component={MyOrder}
         options={{
           drawerLabel: 'My Orders',
+          drawerIcon: ({focused, color}) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                width: responsiveWidth(8),
+                height: responsiveWidth(10),
+                tintColor: focused ? '#fff' : colors.AppColor,
+              }}
+              source={images.drawer2}
+            />
+          ),
         }}
       />
       <Drawer.Screen
@@ -68,6 +123,18 @@ function DrawerStacks() {
         component={About}
         options={{
           drawerLabel: 'About us',
+          drawerIcon: ({focused, color}) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                width: responsiveWidth(8),
+                height: responsiveWidth(10),
+
+                tintColor: focused ? '#fff' : colors.AppColor,
+              }}
+              source={images.drawer3}
+            />
+          ),
         }}
       />
       <Drawer.Screen
@@ -75,6 +142,18 @@ function DrawerStacks() {
         component={Contectus}
         options={{
           drawerLabel: 'Contect us',
+          drawerIcon: ({focused, color}) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                width: responsiveWidth(8),
+                height: responsiveWidth(10),
+
+                tintColor: focused ? '#fff' : colors.AppColor,
+              }}
+              source={images.drawer4}
+            />
+          ),
         }}
       />
       <Drawer.Screen
@@ -82,8 +161,39 @@ function DrawerStacks() {
         component={ThingsStack}
         options={{
           drawerLabel: 'Things to know',
+          drawerIcon: ({focused, color}) => (
+            <Image
+              resizeMode="contain"
+              style={{
+                width: responsiveWidth(8),
+                height: responsiveWidth(10),
+
+                tintColor: focused ? '#fff' : colors.AppColor,
+              }}
+              source={images.drawer5}
+            />
+          ),
         }}
       />
+      <Drawer.Screen
+        name="Productdetail"
+        component={Productdetail}
+        options={{
+          drawerItemStyle: {
+            display: 'none',
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Checkout"
+        component={Checkout}
+        options={{
+          drawerItemStyle: {
+            display: 'none',
+          },
+        }}
+      />
+      {/* <Stack.Screen name="" component={} /> */}
     </Drawer.Navigator>
   );
 }

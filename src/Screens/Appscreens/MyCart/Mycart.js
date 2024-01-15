@@ -21,7 +21,7 @@ import {images} from '../../../Utlies/Images';
 import {colors} from '../../../Utlies/constant/Themes';
 import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 
-const Mycart = () => {
+const Mycart = ({navigation}) => {
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1}}>
       <StatusBar
@@ -37,7 +37,7 @@ const Mycart = () => {
           backgroundColor: 'transparent',
         }}>
         <ScrollView
-          style={{flexGrow: 1, marginBottom: responsiveHeight(7)}}
+          style={{flexGrow: 1, marginBottom: responsiveHeight(9)}}
           showsVerticalScrollIndicator={true}>
           <FlatList
             data={[1, 2, 3]}
@@ -120,14 +120,19 @@ const Mycart = () => {
                 bgcolor={colors.AppColor}
                 fontFamily={'Poppins-Bold'}
                 text={'Continue to Checkout'}
+                onPress={() => {
+                  navigation.navigate('Checkout');
+                }}
                 textcolor={'#ffff'}
                 style={{
                   height: responsiveHeight(6.5),
                   marginTop: responsiveHeight(1),
+                  // marginBottom: responsiveHeight(40),
                 }}
               />
             </View>
           </View>
+          <View style={{height: responsiveHeight(10)}}></View>
         </ScrollView>
       </View>
     </SafeAreaView>
