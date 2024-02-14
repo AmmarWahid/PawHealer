@@ -24,8 +24,4 @@ export const pawhealerApis = createApi({
   }),
 });
 
-export const {
-  useSignupMutation,
-  useLoginUserMutation,
-  useForgetpasswordMutation,
-} = pawhealerApis;
+export const {useSignupMutation} = pawhealerApis;
