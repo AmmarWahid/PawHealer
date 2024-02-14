@@ -16,8 +16,13 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {images} from '../../../Utlies/Images';
+import {useDispatch} from 'react-redux';
 
 const Profile = ({navigation}) => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch({type: 'LOGOUT', payload: null});
+  };
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -96,7 +101,9 @@ const Profile = ({navigation}) => {
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnicontxt_contain}>
+          <TouchableOpacity
+            style={styles.btnicontxt_contain}
+            onPress={handleLogout}>
             <View style={styles.iconcontain}>
               <Image source={images.logout} style={styles.btnicon} />
 

@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import {
   responsiveHeight,
@@ -21,6 +28,7 @@ const CoustomButton = ({
   self,
   style,
   iconcolor,
+  loading,
 }) => {
   return (
     <>
@@ -43,28 +51,37 @@ const CoustomButton = ({
           self && {alignSelf: 'center'},
           style,
         ]}>
-        {withicon && (
-          <Image
-            resizeMode="contain"
-            source={withicon}
-            style={{
-              height: responsiveHeight(3.5),
-              width: responsiveHeight(4),
-              borderRadius: responsiveHeight(2),
-              position: 'absolute',
-              left: responsiveWidth(7),
-              tintColor: iconcolor,
-            }}
-          />
-        )}
+        {loading ? (
+          <ActivityIndicator size={'small'} color={'white'} />
+        ) : (
+          <>
+            {withicon && (
+              <Image
+                resizeMode="contain"
+                source={withicon}
+                style={{
+                  height: responsiveHeight(3.5),
+                  width: responsiveHeight(4),
+                  borderRadius: responsiveHeight(2),
+                  position: 'absolute',
+                  left: responsiveWidth(7),
+                  tintColor: iconcolor,
+                }}
+              />
+            )}
 
-        <NormalText
-          children={text}
-          textStyle={[{left: withicon ? responsiveWidth(3) : null}, textStyle]}
-          bold
-          color={textcolor}
-          fontFamily={fontFamily}
-        />
+            <NormalText
+              children={text}
+              textStyle={[
+                {left: withicon ? responsiveWidth(3) : null},
+                textStyle,
+              ]}
+              bold
+              color={textcolor}
+              fontFamily={fontFamily}
+            />
+          </>
+        )}
       </TouchableOpacity>
     </>
   );

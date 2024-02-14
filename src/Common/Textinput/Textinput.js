@@ -114,6 +114,7 @@ const CoustomTextinput = ({
             placeholderTextColor={Placecolor ? '#fff' : '#000'}
             maxLength={maxLength}
             multiline={true}
+            autoCapitalize="none"
           />
           {inputIcon && (
             <View onTouchEnd={onIconpress}>

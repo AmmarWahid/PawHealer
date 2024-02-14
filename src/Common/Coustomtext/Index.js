@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   },
   Discription: {
     fontSize: responsiveFontSize(1.7),
+    marginLeft: responsiveWidth(6),
   },
   Medium: {
     fontSize: responsiveFontSize(2.2),

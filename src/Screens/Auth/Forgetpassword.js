@@ -12,6 +12,7 @@ import {colors} from '../../Utlies/constant/Themes';
 import {images} from '../../Utlies/Images';
 import Fields from '../../Common/Fields/Fields';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useForgetPassword} from './useUsers';
 
 const Forgetpassword = ({navigation}) => {
   const {
@@ -19,6 +20,8 @@ const Forgetpassword = ({navigation}) => {
     formState: {errors},
     handleSubmit,
   } = useForm();
+
+  const {handleForget, isLoading} = useForgetPassword();
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -51,7 +54,7 @@ const Forgetpassword = ({navigation}) => {
         <Fields
           control={control}
           name={'email'}
-          placeholder={'Email/Phone Number'}
+          placeholder={'Email'}
           inputIcon={images.email}
           alignSelf
           rules={{
@@ -64,15 +67,14 @@ const Forgetpassword = ({navigation}) => {
           }}
           style={{backgroundColor: 'rgba(224, 237, 222, 0.8)'}}
           error={errors}
-          errorstyle={{left: responsiveWidth(10)}}
+          // errorstyle={{left: responsiveWidth(10)}}
           errorcolor={'red'}
         />
         <CoustomButton
           bgcolor={colors.AppColor}
           text={'Recover Password'}
-          onPress={() => {
-            navigation.navigate('Sentcode');
-          }}
+          loading={isLoading}
+          onPress={handleSubmit(data => handleForget(data))}
           textcolor={'#fff'}
           width={responsiveWidth(80)}
           style={{

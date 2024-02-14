@@ -25,6 +25,7 @@ import {
 import {AvoidSoftInput} from 'react-native-avoid-softinput';
 import CoustomButton from '../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../Utlies/constant/Themes';
+import {useLogin} from './useUsers';
 
 const Login = ({navigation}) => {
   const {
@@ -32,6 +33,7 @@ const Login = ({navigation}) => {
     formState: {errors},
     handleSubmit,
   } = useForm();
+  const {handleLogin, isLoading} = useLogin();
   useEffect(() => {
     AvoidSoftInput.setShouldMimicIOSBehavior(true);
     AvoidSoftInput.setEnabled(true);
@@ -106,13 +108,14 @@ const Login = ({navigation}) => {
             bgcolor={colors.AppColor}
             self
             text={'Login'}
+            loading={isLoading}
             textcolor={'#fff'}
             width={responsiveWidth(80)}
             style={{
               borderRadius: responsiveWidth(10),
               marginTop: responsiveHeight(4),
             }}
-            onPress={() => navigation.navigate('DrawerStacks')}
+            onPress={handleSubmit(data => handleLogin(data))}
           />
         </View>
         <View style={styles.signuptxt}>

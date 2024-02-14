@@ -16,8 +16,10 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {images} from '../../../Utlies/Images';
+import {useNavigation} from '@react-navigation/native';
 
-const Thinkstoknow = ({navigation}) => {
+const Thinkstoknow = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -27,7 +29,11 @@ const Thinkstoknow = ({navigation}) => {
       />
 
       <View style={{flex: 0.17}}>
-        <Header Heading={'Things to Know'} color={'#fff'} />
+        <Header
+          Heading={'Things to Know'}
+          color={'#fff'}
+          navigation={() => navigation.goBack()}
+        />
       </View>
 
       <View

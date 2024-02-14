@@ -1,23 +1,28 @@
-import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useForm} from 'react-hook-form';
+import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import CoustomButton from '../../Common/CoustomButton.js/CoustomButton';
-import {colors} from '../../Utlies/constant/Themes';
 import COTP from '../../Common/CoustomOTP/CoustomOTP';
-import {useForm} from 'react-hook-form';
 import {images} from '../../Utlies/Images';
+import {colors} from '../../Utlies/constant/Themes';
+import {useVerifyOtp} from './useUsers';
 
-const Otp = ({navigation}) => {
+const Otp = ({navigation, route}) => {
+  const {email} = route?.params || {};
   const {
     formState: {errors, defaultValues},
     control,
     handleSubmit,
   } = useForm();
+
+  const {handleVerifyOtp, isLoading} = useVerifyOtp();
+
   return (
     <SafeAreaView
       edges={['bottom']}
@@ -49,29 +54,29 @@ const Otp = ({navigation}) => {
           bgcolor={colors.AppColor}
           text={'Verify'}
           textcolor={'#fff'}
-          onPress={() => {
-            navigation.navigate('Recoverpassword');
-          }}
           self
+          loading={isLoading}
+          onPress={handleSubmit(data => handleVerifyOtp(data, email))}
+          // loading={isLoading}
           height={responsiveHeight(5)}
           width={responsiveWidth(60)}
           style={{marginTop: responsiveHeight(5)}}
         />
 
         {/* <NormalText
-          children={'Didn’t recieve a verification code?'}
-          color={'#fff'}
-          center
-          textStyle={{marginTop: responsiveHeight(4)}}
-        /> */}
+					children={'Didn’t recieve a verification code?'}
+					color={'#fff'}
+					center
+					textStyle={{marginTop: responsiveHeight(4)}}
+				/> */}
         {/* <TouchableOpacity onPress={onPress}>
-          <DiscriptionText
-            children={'Didn’t recieve a verification code?'}
-            color={'red'}
-            center
-            textStyle={{marginTop: responsiveHeight(2)}}
-          />
-        </TouchableOpacity> */}
+					<DiscriptionText
+						children={'Didn’t recieve a verification code?'}
+						color={'red'}
+						center
+						textStyle={{marginTop: responsiveHeight(2)}}
+					/>
+				</TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

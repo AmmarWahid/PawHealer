@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {images} from '../../../Utlies/Images';
 import {
   responsiveFontSize,
@@ -41,14 +41,13 @@ const Home = ({navigation}) => {
             navigation.openDrawer();
           }}
           style={{top: responsiveHeight(4)}}>
-          <FontAwesome6 name="bars-staggered" size={35} color={'#000'} />
+          <Entypo name="menu" size={35} color={'#000'} />
         </TouchableOpacity>
         <Image
           source={images.Applogo}
           resizeMode="contain"
           style={styles.app_logo}
         />
-        <View></View>
       </View>
       <CoustomTextinput
         alignSelf
