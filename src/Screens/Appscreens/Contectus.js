@@ -12,8 +12,10 @@ import Fields from '../../Common/Fields/Fields';
 import {AvoidSoftInput} from 'react-native-avoid-softinput';
 import CoustomButton from '../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../Utlies/constant/Themes';
+import {useNavigation} from '@react-navigation/native';
 
 const Contectus = () => {
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -32,7 +34,11 @@ const Contectus = () => {
         barStyle={'light-content'}
       />
       <View style={{flex: 0.17}}>
-        <Header Heading={'Contect Us'} color={'#fff'} />
+        <Header
+          Heading={'Contect Us'}
+          color={'#fff'}
+          navigation={() => navigation.goBack()}
+        />
       </View>
       <View style={styles.content_container}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>

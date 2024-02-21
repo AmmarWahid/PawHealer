@@ -19,13 +19,42 @@ import Fields from '../../../Common/Fields/Fields';
 import {images} from '../../../Utlies/Images';
 import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../../Utlies/constant/Themes';
+import {useSelector} from 'react-redux';
+import {useCreateorderMutation} from '../../../Store/Main';
 
-const Checkout = ({navigation}) => {
+const Checkout = ({navigation, route}) => {
+  const {total} = route.params || {};
   const {
     control,
     formState: {errors},
     handleSubmit,
   } = useForm();
+  const {order} = useSelector(state => state.Slice);
+  const [createOrder, {status, isLoading}] = useCreateorderMutation();
+  const updated = order.map(i => {
+    return {
+      product_id: i.id,
+      quantity: i.Quantity,
+    };
+  });
+
+  const onsubmit = async value => {
+    const body = {
+      ...value,
+      order_products: updated,
+    };
+    console.log('first', body);
+    try {
+      const res = await createOrder(body);
+      console.log('res', res.data);
+      if (res?.data?.success) {
+        navigation.navigate('TabStacks');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView edges={['bottom']} style={{}}>
       <Header
@@ -71,7 +100,7 @@ const Checkout = ({navigation}) => {
               errorcolor={'red'}
               alignSelf={true}
               control={control}
-              name={'address'}
+              name={'billing_address'}
               style={{
                 backgroundColor: '#fff',
                 borderWidth: responsiveWidth(0.3),
@@ -86,7 +115,7 @@ const Checkout = ({navigation}) => {
               errorcolor={'red'}
               alignSelf={true}
               control={control}
-              name={'address'}
+              name={'city'}
               style={{
                 backgroundColor: '#fff',
                 borderWidth: responsiveWidth(0.3),
@@ -101,7 +130,7 @@ const Checkout = ({navigation}) => {
               errorcolor={'red'}
               alignSelf={true}
               control={control}
-              name={'address'}
+              name={'phone'}
               style={{
                 backgroundColor: '#fff',
                 borderWidth: responsiveWidth(0.3),
@@ -118,7 +147,7 @@ const Checkout = ({navigation}) => {
               errorcolor={'red'}
               alignSelf={true}
               control={control}
-              name={'address'}
+              name={'state'}
               style={{
                 backgroundColor: '#fff',
                 borderWidth: responsiveWidth(0.3),
@@ -134,7 +163,7 @@ const Checkout = ({navigation}) => {
               errorcolor={'red'}
               alignSelf={true}
               control={control}
-              name={'address'}
+              name={'zip'}
               secureTextEntry={true}
               style={{
                 backgroundColor: '#fff',
@@ -176,16 +205,16 @@ const Checkout = ({navigation}) => {
             }}>
             <View style={styles.txt_1_Contain}>
               <Text style={styles.txt_1}>Delivery Fee : </Text>
-              <Text style={[styles.txt_1, {color: '#000'}]}>$ 20</Text>
+              <Text style={[styles.txt_1, {color: '#000'}]}>$ 0</Text>
             </View>
             <View style={styles.txt_1_Contain}>
               <Text style={styles.txt_1}>Subtotal :</Text>
-              <Text style={[styles.txt_1, {color: '#000'}]}>$ 36</Text>
+              <Text style={[styles.txt_1, {color: '#000'}]}>$ 0</Text>
             </View>
             <View
               style={[styles.txt_1_Contain, {marginTop: responsiveHeight(2)}]}>
               <Text style={styles.txt_1}>Total :</Text>
-              <Text style={[styles.txt_1, {color: '#000'}]}>$ 40,00</Text>
+              <Text style={[styles.txt_1, {color: '#000'}]}>$ {total}</Text>
             </View>
           </View>
 
@@ -232,12 +261,13 @@ const Checkout = ({navigation}) => {
             text={'Swipe for Payment'}
             textcolor={'#fff'}
             width={responsiveWidth(80)}
+            loading={isLoading}
             style={{
               borderRadius: responsiveWidth(10),
               marginTop: responsiveHeight(4),
               marginBottom: responsiveHeight(40),
             }}
-            onPress={() => alert('Stripe-Section')}
+            onPress={handleSubmit(onsubmit)}
           />
         </ScrollView>
       </View>

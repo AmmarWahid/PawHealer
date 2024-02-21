@@ -6,20 +6,26 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {colors} from '../../../Utlies/constant/Themes';
+import {useGetorderQuery} from '../../../Store/Main';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Cancelled = () => {
+  const {data} = useGetorderQuery();
+  // console.log('data', data.data.data);
+  const orders = data?.data?.data?.filter(i => i.order_status === 'cancelled');
+  console.log('ordersDeliverd', orders);
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{marginTop: responsiveHeight(2)}}>
         <FlatList
-          data={[1, 2, 3, 4, 5, 6]}
+          data={orders}
           renderItem={({item}) => {
             return (
               <View style={{flex: 1}}>
                 <View style={styles.container}>
                   <View style={styles.contents}>
-                    <Text style={styles.boldtxt}>Order №1947034</Text>
-                    <Text style={styles.lighttxt}>05-12-2019</Text>
+                    <Text style={styles.boldtxt}>Order </Text>
+                    <Text style={styles.lighttxt}>{item.created_at}</Text>
                   </View>
                   <View
                     style={[
@@ -31,7 +37,7 @@ const Cancelled = () => {
                     </Text>
 
                     <Text style={[styles.lighttxt, {color: '#000'}]}>
-                      IW3475453455
+                      {item.tracking_number}
                     </Text>
                   </View>
                   <View
@@ -40,11 +46,15 @@ const Cancelled = () => {
                       //   {justifyContent: 'flex-start', gap: 10},
                     ]}>
                     <Text style={[styles.lighttxt, {color: 'gray'}]}>
-                      Quantity: <Text style={{color: '#000'}}> 3</Text>
+                      Quantity:{' '}
+                      <Text style={{color: '#000'}}>
+                        {item.order_products[0].quantity}
+                      </Text>
                     </Text>
 
                     <Text style={[styles.lighttxt, {color: 'gray'}]}>
-                      Total Amount: <Text style={{color: '#000'}}> $119</Text>
+                      Total Amount:{' '}
+                      <Text style={{color: '#000'}}> {item.total}</Text>
                     </Text>
                   </View>
                   <View style={styles.contents}>
@@ -53,6 +63,7 @@ const Cancelled = () => {
                         Details
                       </Text>
                     </View>
+
                     <Text style={[styles.lighttxt, {color: 'red'}]}>
                       Cancelled
                     </Text>
@@ -63,7 +74,7 @@ const Cancelled = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

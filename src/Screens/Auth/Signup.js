@@ -25,6 +25,9 @@ import {
 import {AvoidSoftInput} from 'react-native-avoid-softinput';
 import CoustomButton from '../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../Utlies/constant/Themes';
+import {useSignupMutation} from '../../Store/Auth';
+import {handlePostRequest, showToast} from '../../Utlies/helpers';
+import {useSignUp} from './useUsers';
 
 const Signup = ({navigation}) => {
   const {
@@ -32,11 +35,13 @@ const Signup = ({navigation}) => {
     formState: {errors},
     handleSubmit,
   } = useForm();
+  const {handleSignup, isLoading} = useSignUp();
   useEffect(() => {
     AvoidSoftInput.setShouldMimicIOSBehavior(true);
     AvoidSoftInput.setEnabled(true);
     AvoidSoftInput.setAdjustPan(true);
   }, []);
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -74,11 +79,17 @@ const Signup = ({navigation}) => {
           errorcolor={'red'}
           alignSelf={true}
           control={control}
-          name={'fullname'}
+          name={'name'}
           style={{backgroundColor: 'rgba(224, 237, 222, 0.8)'}}
           inputIcon={images.emailIcon}
           placeholder={'Full Name'}
           textbgcolor={'#000'}
+          rules={{
+            required: {
+              value: true,
+              message: 'Name is required.',
+            },
+          }}
         />
 
         <Fields
@@ -87,6 +98,17 @@ const Signup = ({navigation}) => {
           alignSelf={true}
           control={control}
           name={'email'}
+          rules={{
+            required: {
+              value: true,
+              message: 'Email is required.',
+            },
+            pattern: {
+              value:
+                /^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?(?:\.[a-zA-Z]{2,})?$/,
+              message: 'Please enter a valid email address.',
+            },
+          }}
           style={{
             backgroundColor: 'rgba(224, 237, 222, 0.8)',
             marginTop: responsiveHeight(2),
@@ -102,6 +124,12 @@ const Signup = ({navigation}) => {
           alignSelf={true}
           control={control}
           name={'password'}
+          rules={{
+            required: {
+              value: true,
+              message: 'Password is required.',
+            },
+          }}
           style={{
             backgroundColor: 'rgba(224, 237, 222, 0.8)',
             marginTop: responsiveHeight(2),
@@ -110,11 +138,33 @@ const Signup = ({navigation}) => {
           placeholder={'Password'}
           textbgcolor={'#000'}
         />
+        <Fields
+          error={errors}
+          errorcolor={'red'}
+          alignSelf={true}
+          control={control}
+          name={'password_confirmation'}
+          rules={{
+            required: {
+              value: true,
+              message: 'Confirm Password is required.',
+            },
+          }}
+          style={{
+            backgroundColor: 'rgba(224, 237, 222, 0.8)',
+            marginTop: responsiveHeight(2),
+          }}
+          inputIcon={images.passwordIcon}
+          placeholder={'Confirm Password'}
+          textbgcolor={'#000'}
+        />
 
         <View>
           <CoustomButton
             bgcolor={colors.AppColor}
             self
+            loading={isLoading}
+            onPress={handleSubmit(data => handleSignup(data))}
             text={'Sign Up'}
             textcolor={'#fff'}
             width={responsiveWidth(80)}

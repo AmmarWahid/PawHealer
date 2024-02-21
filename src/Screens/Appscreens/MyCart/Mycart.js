@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '../../../Components/Header';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -20,8 +20,45 @@ import {
 import {images} from '../../../Utlies/Images';
 import {colors} from '../../../Utlies/constant/Themes';
 import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUpdateOrder} from '../../../Store/Slice';
 
 const Mycart = ({navigation}) => {
+  const {order} = useSelector(state => state.Slice);
+
+  const [value, setValue] = React.useState([]);
+
+  const dispatch = useDispatch();
+  const orderupdate = (item, action) => {
+    let totalquntity = item.Quantity;
+
+    if (action === true) {
+      totalquntity++;
+    } else if (action === false) {
+      totalquntity--;
+    }
+    console.log(totalquntity);
+
+    const updated = order.map(i => {
+      if (i.id == item.id) {
+        return {
+          ...i,
+          Quantity: totalquntity,
+          totalprice: i.price * totalquntity,
+        };
+      }
+      return i;
+    });
+    dispatch(setUpdateOrder(updated));
+  };
+  let totalprice = 0;
+  for (let i = 0; i < order.length; i++) {
+    order[i].totalprice++;
+    let element = order[i].totalprice;
+    totalprice = totalprice + element;
+    console.log('element', element);
+  }
+  console.log('total price', totalprice);
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1}}>
       <StatusBar
@@ -40,7 +77,7 @@ const Mycart = ({navigation}) => {
           style={{flexGrow: 1, marginBottom: responsiveHeight(9)}}
           showsVerticalScrollIndicator={true}>
           <FlatList
-            data={[1, 2, 3]}
+            data={order}
             scrollEnabled={false}
             style={styles.flatlist}
             renderItem={({item, index}) => {
@@ -49,25 +86,31 @@ const Mycart = ({navigation}) => {
                   <View style={styles.data_content}>
                     <View style={styles.fav_img}>
                       <Image
-                        source={images.mask}
+                        source={{uri: item?.image_url}}
                         resizeMode="contain"
                         style={{
                           height: responsiveHeight(10),
+                          width: responsiveHeight(10),
                         }}
                       />
                     </View>
 
                     <View style={styles.right_content}>
                       <View>
-                        <Text style={styles.label}>Bladder Irritation</Text>
+                        <Text numberOfLines={1} style={styles.label}>
+                          {item.name}
+                        </Text>
                         <Text style={styles.disc}>
                           Vivamus urna turpis, tempus ut
                         </Text>
                       </View>
                       <View style={styles.rate_btn_contain}>
-                        <Text style={styles.rate}>$180.00</Text>
+                        <Text style={styles.rate}>${item.totalprice}</Text>
                         <View style={styles.btn}>
-                          <TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              orderupdate(item, false);
+                            }}>
                             <Image
                               resizeMode="contain"
                               source={images.minus}
@@ -78,9 +121,12 @@ const Mycart = ({navigation}) => {
                             />
                           </TouchableOpacity>
                           <View>
-                            <Text style={styles.btn_txt}>1</Text>
+                            <Text style={styles.btn_txt}>{item.Quantity}</Text>
                           </View>
-                          <TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              orderupdate(item, true);
+                            }}>
                             <Image
                               resizeMode="contain"
                               source={images.pluscart}
@@ -101,11 +147,13 @@ const Mycart = ({navigation}) => {
           <View style={styles.bill}>
             <View style={styles.bill_contain}>
               <Text style={styles.bill_txt}>Amount of Products:</Text>
-              <Text style={[styles.bill_txt, {color: 'gray'}]}>$46.90</Text>
+              <Text style={[styles.bill_txt, {color: 'gray'}]}>
+                $ {totalprice}
+              </Text>
             </View>
             <View style={styles.bill_contain}>
               <Text style={styles.bill_txt}>Tax:</Text>
-              <Text style={[styles.bill_txt, {color: 'gray'}]}>$12.00</Text>
+              <Text style={[styles.bill_txt, {color: 'gray'}]}>.00</Text>
             </View>
             <View style={styles.bill_contain}>
               <Text style={styles.bill_txt}>Cargo:</Text>
@@ -113,7 +161,9 @@ const Mycart = ({navigation}) => {
             </View>
             <View style={styles.bill_contain}>
               <Text style={styles.bill_txt}>TOTAL:</Text>
-              <Text style={[styles.bill_txt, {color: 'gray'}]}>$58.90</Text>
+              <Text style={[styles.bill_txt, {color: 'gray'}]}>
+                ${totalprice}
+              </Text>
             </View>
             <View>
               <CoustomButton
@@ -121,7 +171,7 @@ const Mycart = ({navigation}) => {
                 fontFamily={'Poppins-Bold'}
                 text={'Continue to Checkout'}
                 onPress={() => {
-                  navigation.navigate('Checkout');
+                  navigation.navigate('Checkout', {total: totalprice});
                 }}
                 textcolor={'#ffff'}
                 style={{
@@ -168,7 +218,7 @@ const styles = StyleSheet.create({
   },
   rate: {
     color: colors.AppColor,
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.6),
     fontFamily: 'Poppins-Regular',
     letterSpacing: 0.2,
   },
@@ -178,6 +228,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     letterSpacing: 0.5,
     fontWeight: '500',
+    width: responsiveWidth(48),
   },
   flatlist: {overflow: 'hidden', top: responsiveHeight(1), zIndex: 999},
   right_content: {

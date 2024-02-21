@@ -4,15 +4,20 @@ import {persistReducer, persistStore} from 'redux-persist';
 import thunk from 'redux-thunk';
 import allreducers from './../Store/Reducers';
 import {pawhealerApis} from './Auth';
+import {getMainApis} from './Main';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   timeout: undefined,
-  blacklist: [pawhealerApis.reducerPath],
+  blacklist: [pawhealerApis.reducerPath, getMainApis.reducerPath],
 };
 
 const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    AsyncStorage.removeItem('persist:root');
+    return allreducers(undefined, action);
+  }
   return allreducers(state, action);
 };
 
@@ -23,7 +28,7 @@ export const Store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(pawhealerApis.middleware),
+    }).concat(pawhealerApis.middleware, getMainApis.middleware),
 });
 
 export const persistor = persistStore(Store);

@@ -93,14 +93,15 @@ const CoustomTextinput = ({
             numberOfLines={numberOfLines}
             style={[
               {
-                height: responsiveHeight(5.5),
+                height: '100%',
                 // left: responsiveWidth(1),
-                width: responsiveWidth(63),
+                width: responsiveWidth(78),
 
                 color: 'black',
+
                 opacity: 0.8,
                 letterSpacing: letterSpacing,
-                textAlignVertical: 'top',
+                // textAlignVertical: 'top',
               },
               {color: textbgcolor},
               inputstyle,
@@ -113,6 +114,7 @@ const CoustomTextinput = ({
             placeholderTextColor={Placecolor ? '#fff' : '#000'}
             maxLength={maxLength}
             multiline={true}
+            autoCapitalize="none"
           />
           {inputIcon && (
             <View onTouchEnd={onIconpress}>
@@ -122,7 +124,7 @@ const CoustomTextinput = ({
                   height: responsiveHeight(3),
                   width: responsiveHeight(3),
                   tintColor: tintColor,
-                  left: responsiveWidth(15),
+                  // left: responsiveWidth(10),
                 }}
                 source={inputIcon}
               />

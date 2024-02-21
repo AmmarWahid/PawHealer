@@ -19,8 +19,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../Components/Header';
 import {images} from '../../../../Utlies/Images';
 import {colors} from '../../../../Utlies/constant/Themes';
+import {
+  useAddfavMutation,
+  useDeletefavMutation,
+  useGetAllfavQuery,
+} from '../../../../Store/Main';
 
-const Dog = ({navigation}) => {
+const Dog = ({navigation, route}) => {
+  const {item} = route?.params;
+  console.log('dog item', item);
+  const [Addfavrts, {status}] = useAddfavMutation();
+
+  const {data} = useGetAllfavQuery();
+  console.log('@nd', data);
+  console.log('iserror', status);
+
+  // let fav=data?.data?.data.find(item => item?.id.includes(daata));
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -29,7 +43,7 @@ const Dog = ({navigation}) => {
         barStyle={'light-content'}
       />
       <Header
-        Heading={'Dog Herbs'}
+        Heading={item?.name}
         color={'#fff'}
         navigation={() => navigation.navigate('HomeScreen')}
       />
@@ -40,67 +54,85 @@ const Dog = ({navigation}) => {
           style={{
             marginTop: responsiveHeight(2),
           }}>
-          <View
-            style={
-              {
-                // flex: 1,
-                // justifyContent: 'space-between',
-              }
-            }>
-            <View>
-              <View style={styles.labelContainer}>
-                <Text style={styles.label}>Bladder</Text>
-                <TouchableOpacity>
-                  <Text style={styles.viewMore}>View More</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  maxHeight: responsiveHeight(32.5),
-                }}>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={[1, 2, 3]}
-                  contentContainerStyle={styles.bladder}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View style={styles.containerItem}>
-                        <View style={styles.imageContainer}>
-                          <Image
-                            source={images.mask}
-                            resizeMode="contain"
-                            style={styles.image}
-                          />
+          {item?.child_categories?.map((_item, index) => (
+            <View
+              key={index}
+              style={
+                {
+                  // flex: 1,
+                  // justifyContent: 'space-between',
+                }
+              }>
+              <View>
+                <View style={styles.labelContainer}>
+                  <Text style={styles.label}>{_item?.name}</Text>
+                  <TouchableOpacity>
+                    <Text style={styles.viewMore}>View More</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    maxHeight: responsiveHeight(32.5),
+                  }}>
+                  <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={_item?.products}
+                    contentContainerStyle={styles.bladder}
+                    renderItem={({item, index}) => {
+                      let fav = data?.data?.data.find(
+                        i => i?.product_id === item.id,
+                      );
+                      console.log('fav', fav);
+                      return (
+                        <View style={styles.containerItem}>
+                          <View style={styles.imageContainer}>
+                            <Image
+                              source={{uri: item?.image_url}}
+                              resizeMode="contain"
+                              style={styles.image}
+                            />
+                          </View>
+                          <Text numberOfLines={2} style={styles.itemName}>
+                            {item?.name}
+                          </Text>
+                          <View style={styles.priceIcon}>
+                            <Text style={styles.price}>$ {item?.price}</Text>
+                            <TouchableOpacity
+                              onPress={() => {
+                                Addfavrts({product_id: item.id});
+                              }}>
+                              <Image
+                                resizeMode="contain"
+                                source={images.heart}
+                                style={[
+                                  styles.heartIcon,
+                                  {tintColor: fav ? null : 'gray'},
+                                ]}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                          <TouchableOpacity
+                            style={styles.plus}
+                            onPress={() => {
+                              navigation.navigate('Productdetail', {
+                                productItem: item,
+                              });
+                            }}>
+                            <Image
+                              resizeMode="contain"
+                              source={images.plus}
+                              style={styles.icon}
+                            />
+                          </TouchableOpacity>
                         </View>
-                        <Text style={styles.itemName}>Cough Center</Text>
-                        <View style={styles.priceIcon}>
-                          <Text style={styles.price}>$12.00</Text>
-                          <Image
-                            resizeMode="contain"
-                            source={images.heart}
-                            style={styles.heartIcon}
-                          />
-                        </View>
-                        <TouchableOpacity
-                          style={styles.plus}
-                          onPress={() => {
-                            navigation.navigate('Productdetail');
-                          }}>
-                          <Image
-                            resizeMode="contain"
-                            source={images.plus}
-                            style={styles.icon}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }}
-                />
+                      );
+                    }}
+                  />
+                </View>
               </View>
-            </View>
 
-            <View>
+              {/* <View>
               <View
                 style={[
                   styles.labelContainer,
@@ -156,8 +188,9 @@ const Dog = ({navigation}) => {
                   }}
                 />
               </View>
+            </View> */}
             </View>
-          </View>
+          ))}
           {/* <View ></View> */}
         </ScrollView>
       </View>
@@ -226,8 +259,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: '#000',
     fontWeight: '500',
-    fontSize: responsiveFontSize(1.9),
+    fontSize: responsiveFontSize(1.6),
     marginTop: responsiveHeight(1),
+    width: responsiveWidth(35),
+    height: responsiveHeight(4.5),
   },
   priceIcon: {
     flexDirection: 'row',

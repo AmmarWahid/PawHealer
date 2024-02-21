@@ -12,6 +12,8 @@ import {colors} from '../../../Utlies/constant/Themes';
 import Delivered from './Delivered';
 import Processing from './Processing';
 import Cancelled from './Cancelled';
+import {useNavigation} from '@react-navigation/native';
+import {useGetorderQuery} from '../../../Store/Main';
 
 const renderTabBar = props => (
   <TabBar
@@ -52,6 +54,8 @@ const renderTabBar = props => (
 );
 
 const MyOrder = () => {
+  const navigation = useNavigation();
+
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'Delivered', title: 'Delivered'},
@@ -72,7 +76,11 @@ const MyOrder = () => {
         backgroundColor={'transparent'}
         barStyle={'light-content'}
       />
-      <Header Heading={'My Order'} color={'#fff'} />
+      <Header
+        Heading={'My Order'}
+        color={'#fff'}
+        navigation={() => navigation.goBack()}
+      />
       <View style={{flex: 1, paddingTop: responsiveHeight(4)}}>
         <TabView
           navigationState={{index, routes}}

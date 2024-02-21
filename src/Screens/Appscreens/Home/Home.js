@@ -7,10 +7,11 @@ import {
   View,
   ScrollView,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {images} from '../../../Utlies/Images';
 import {
   responsiveFontSize,
@@ -20,14 +21,17 @@ import {
 import CoustomTextinput from '../../../Common/Textinput/Textinput';
 import {colors} from '../../../Utlies/constant/Themes';
 import Swiper from 'react-native-swiper';
+import {useGetAllCategoriesQuery} from '../../../Store/Main';
 const Data = [
-  {id: 1, Img: images.categry1, img_1: images.herbs1},
   {id: 2, Img: images.categry3, img_1: images.herbs2},
+  {id: 1, Img: images.categry1, img_1: images.herbs1},
   {id: 3, Img: images.categry4, img_1: images.herbs3},
   {id: 4, Img: images.categry2, img_1: images.herbs4},
   {id: 5, Img: images.categry5, img_1: images.herbs1},
 ];
 const Home = ({navigation}) => {
+  const {data, isLoading} = useGetAllCategoriesQuery();
+  console.log('data', data);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}} edges={['bottom']}>
       <StatusBar
@@ -35,20 +39,20 @@ const Home = ({navigation}) => {
         backgroundColor={'transparent'}
         barStyle={'dark-content'}
       />
+
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
             navigation.openDrawer();
           }}
           style={{top: responsiveHeight(4)}}>
-          <FontAwesome6 name="bars-staggered" size={35} color={'#000'} />
+          <Entypo name="menu" size={35} color={'#000'} />
         </TouchableOpacity>
         <Image
           source={images.Applogo}
           resizeMode="contain"
           style={styles.app_logo}
         />
-        <View></View>
       </View>
       <CoustomTextinput
         alignSelf
@@ -103,21 +107,21 @@ const Home = ({navigation}) => {
                 </View>
               </Swiper>
             </View>
-
-            <View style={styles.label_btn_contain}>
-              <View>
-                <Text style={styles.label}>Categories</Text>
+            {isLoading ? (
+              <ActivityIndicator size={'large'} color={'green'} />
+            ) : (
+              <View style={styles.label_btn_contain}>
+                <View>
+                  <Text style={styles.label}>Categories</Text>
+                </View>
               </View>
+            )}
 
-              <TouchableOpacity>
-                <Text style={styles.view_more}>View More</Text>
-              </TouchableOpacity>
-            </View>
             <View>
               <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={Data}
+                data={data?.data?.data}
                 contentContainerStyle={{
                   gap: responsiveWidth(5),
                   paddingHorizontal: responsiveWidth(3),
@@ -128,20 +132,21 @@ const Home = ({navigation}) => {
                     <View style={{flex: 1}}>
                       <TouchableOpacity
                         onPress={() => {
-                          item.id === 1
-                            ? navigation.navigate('Dog')
-                            : item.id === 2
-                            ? navigation.navigate('Catherb')
-                            : item.id === 3
-                            ? navigation.navigate('Products')
-                            : item.id === 4
-                            ? alert('on working')
-                            : item.id === 5
-                            ? navigation.navigate('Supplements')
-                            : null;
+                          // item.id === 1
+                          //   ? navigation.navigate('Dog')
+                          //   : item.id === 2
+                          //   ? navigation.navigate('Catherb')
+                          //   : item.id === 3
+                          //   ? navigation.navigate('Products')
+                          //   : item.id === 4
+                          //   ? alert('on working')
+                          //   : item.id === 5
+                          //   ? navigation.navigate('Supplements')
+                          //   : null;
+                          navigation.navigate('Dog', {item: item});
                         }}>
                         <Image
-                          source={item.Img}
+                          source={Data[index].Img}
                           resizeMode="contain"
                           style={{
                             height: responsiveWidth(18),

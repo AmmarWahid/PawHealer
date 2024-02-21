@@ -23,9 +23,12 @@ import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 import Fields from '../../../Common/Fields/Fields';
 import {useForm} from 'react-hook-form';
 import StarRating from 'react-native-star-rating-widget';
+import {useDispatch, useSelector} from 'react-redux';
+import {setorder} from '../../../Store/Slice';
 
-const Productdetail = ({navigation}) => {
+const Productdetail = ({navigation, route}) => {
   const [selected, setSelected] = useState(0);
+  const {productItem} = route?.params;
   const btns = useCallback(val => {
     setSelected(val);
   }, []);
@@ -35,9 +38,28 @@ const Productdetail = ({navigation}) => {
     handleSubmit,
     formState: {errors},
   } = useForm();
+
   const placeholderData = Array(5).fill({});
   const initialRatings = Array(placeholderData.length).fill(0);
   const [rating, setRating] = useState(initialRatings);
+  const [value, setValue] = useState(1);
+  const [totalprice, setTotalprice] = useState(6);
+  // console.log('productItem', productItem);
+  const dispatch = useDispatch();
+  const {order} = useSelector(state => state.Slice);
+  // console.log('orderproduct', order);
+  let net = productItem.price * value;
+
+  const handleAddtoCart = () => {
+    const product = {
+      ...productItem,
+      Quantity: value,
+      totalprice: net,
+    };
+
+    dispatch(setorder(product));
+    navigation.goBack();
+  };
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: '#ffff'}}
@@ -53,26 +75,26 @@ const Productdetail = ({navigation}) => {
         navigation={() => navigation.goBack()}
       />
       <View style={{marginBottom: responsiveHeight(5)}}>
-        <ScrollView>
+        <ScrollView style={{flexGrow: 1}}>
           <View style={styles.Swiper_contain}>
             <Swiper paginationStyle={{marginRight: responsiveWidth(50)}}>
               <View style={styles.slide1}>
                 <Image
-                  source={images.mask}
+                  source={{uri: productItem?.image_url}}
                   resizeMode="contain"
                   style={styles.slide_img}
                 />
               </View>
               <View style={styles.slide1}>
                 <Image
-                  source={images.mask}
+                  source={{uri: productItem?.image_url}}
                   resizeMode="contain"
                   style={styles.slide_img}
                 />
               </View>
               <View style={styles.slide1}>
                 <Image
-                  source={images.mask}
+                  source={{uri: productItem?.image_url}}
                   resizeMode="contain"
                   style={styles.slide_img}
                 />
@@ -80,8 +102,17 @@ const Productdetail = ({navigation}) => {
             </Swiper>
           </View>
           <View style={styles.heading_contain}>
-            <Text style={styles.heading}>Clears Bladder Damp-Heat</Text>
-            <Text style={styles.price}>$45</Text>
+            <Text
+              numberOfLines={1}
+              style={[
+                styles.heading,
+                {
+                  width: responsiveWidth(60),
+                },
+              ]}>
+              {productItem?.name}
+            </Text>
+            <Text style={styles.price}>$ {productItem?.price}</Text>
           </View>
           <View
             style={{
@@ -101,7 +132,7 @@ const Productdetail = ({navigation}) => {
                 Description
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 btns(1);
               }}>
@@ -112,21 +143,20 @@ const Productdetail = ({navigation}) => {
                 ]}>
                 Review
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {/* description_contain */}
 
           {selected === 0 && (
             <View>
-              <Text style={styles.txt}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                vel ex sit amet neque dignissim mattis non eu est. Etiam
-                pulvinar est mi, et porta magna accumsan nec.
-              </Text>
+              <Text style={styles.txt}>{productItem?.description}</Text>
 
               <View style={styles.heading_contain}>
                 <View style={styles.btn}>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      value == 1 ? null : setValue(value - 1);
+                    }}>
                     <Image
                       resizeMode="contain"
                       source={images.minus}
@@ -137,9 +167,12 @@ const Productdetail = ({navigation}) => {
                     />
                   </TouchableOpacity>
                   <View>
-                    <Text style={styles.btn_txt}>1</Text>
+                    <Text style={styles.btn_txt}>{value}</Text>
                   </View>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setValue(value + 1);
+                    }}>
                     <Image
                       resizeMode="contain"
                       source={images.pluscart}
@@ -153,7 +186,7 @@ const Productdetail = ({navigation}) => {
                 </View>
 
                 <View>
-                  <Text style={styles.heading}>Total : $35.99/ea</Text>
+                  <Text style={styles.heading}>{`Total : $${net}/ea`}</Text>
                 </View>
               </View>
               <View>
@@ -162,14 +195,12 @@ const Productdetail = ({navigation}) => {
                   fontFamily={'Poppins-Bold'}
                   text={'Add to cart'}
                   textcolor={'#ffff'}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
+                  onPress={handleAddtoCart}
                   style={{
                     height: responsiveHeight(6.5),
                     marginTop: responsiveHeight(1),
                     marginHorizontal: responsiveWidth(6),
-                    marginBottom: responsiveHeight(10),
+                    marginBottom: responsiveHeight(17),
                   }}
                 />
               </View>
@@ -177,7 +208,7 @@ const Productdetail = ({navigation}) => {
           )}
           {/* ==>>>>>>>><<<<<<<======= */}
           {/* review contain */}
-          {selected === 1 && (
+          {/* {selected === 1 && (
             <View>
               <View
                 style={{
@@ -255,7 +286,7 @@ const Productdetail = ({navigation}) => {
                 textcolor={'#fff'}
               />
             </View>
-          )}
+          )} */}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -340,10 +371,10 @@ const styles = StyleSheet.create({
   },
   coustombtn: {
     borderRadius: responsiveWidth(3),
-    marginVertical: responsiveHeight(2),
+    marginVertical: responsiveHeight(8),
     height: responsiveHeight(6),
     marginHorizontal: responsiveWidth(6),
-    marginBottom: responsiveHeight(10),
+    marginBottom: responsiveHeight(17),
   },
   star_contain: {
     flexDirection: 'row',

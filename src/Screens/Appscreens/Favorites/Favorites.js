@@ -18,8 +18,11 @@ import {
 
 import {images} from '../../../Utlies/Images';
 import {colors} from '../../../Utlies/constant/Themes';
+import {useGetAllfavQuery} from '../../../Store/Main';
 
 const Favorites = ({navigation}) => {
+  const {data} = useGetAllfavQuery();
+
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar
@@ -36,7 +39,7 @@ const Favorites = ({navigation}) => {
           backgroundColor: 'transparent',
         }}>
         <FlatList
-          data={[1, 2, 3, 4, 6]}
+          data={data?.data?.data}
           contentContainerStyle={{paddingBottom: responsiveHeight(10)}}
           renderItem={({item, index}) => {
             return (

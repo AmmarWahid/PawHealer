@@ -7,8 +7,11 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {useNavigation} from '@react-navigation/native';
 
 const About = () => {
+  const navigation = useNavigation();
+  console.log('navigation', navigation);
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -18,7 +21,12 @@ const About = () => {
       />
       <View style={{flex: 0.17}}>
         <View style={{height: '100%'}}>
-          <Header Heading={'About Us'} color={'#fff'} />
+          <Header
+            navigation={() => navigation.goBack()}
+            lefticon={true}
+            Heading={'About Us'}
+            color={'#fff'}
+          />
         </View>
       </View>
       <View style={styles.content_container}>
