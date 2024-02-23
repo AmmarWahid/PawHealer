@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
@@ -27,13 +28,18 @@ import {
 
 const Dog = ({navigation, route}) => {
   const {item} = route?.params;
-  console.log('dog item', item);
+  // console.log('dog item', item);
   const [Addfavrts, {status}] = useAddfavMutation();
-
+  const [loader, setLoader] = useState();
   const {data} = useGetAllfavQuery();
-  console.log('@nd', data);
   console.log('iserror', status);
-
+  const handle = async item => {
+    setLoader(item?.id);
+    const res = await Addfavrts({product_id: item.id});
+    if (res?.data?.success == true) {
+      setLoader();
+    }
+  };
   // let fav=data?.data?.data.find(item => item?.id.includes(daata));
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -53,86 +59,106 @@ const Dog = ({navigation, route}) => {
           contentContainerStyle={{}}
           style={{
             marginTop: responsiveHeight(2),
+            marginBottom: responsiveHeight(10),
           }}>
-          {item?.child_categories?.map((_item, index) => (
-            <View
-              key={index}
-              style={
-                {
-                  // flex: 1,
-                  // justifyContent: 'space-between',
-                }
-              }>
-              <View>
-                <View style={styles.labelContainer}>
-                  <Text style={styles.label}>{_item?.name}</Text>
-                  <TouchableOpacity>
-                    <Text style={styles.viewMore}>View More</Text>
-                  </TouchableOpacity>
-                </View>
-                <View
-                  style={{
-                    maxHeight: responsiveHeight(32.5),
-                  }}>
-                  <FlatList
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={_item?.products}
-                    contentContainerStyle={styles.bladder}
-                    renderItem={({item, index}) => {
-                      let fav = data?.data?.data.find(
-                        i => i?.product_id === item.id,
-                      );
-                      console.log('fav', fav);
-                      return (
-                        <View style={styles.containerItem}>
-                          <View style={styles.imageContainer}>
-                            <Image
-                              source={{uri: item?.image_url}}
-                              resizeMode="contain"
-                              style={styles.image}
-                            />
-                          </View>
-                          <Text numberOfLines={2} style={styles.itemName}>
-                            {item?.name}
-                          </Text>
-                          <View style={styles.priceIcon}>
-                            <Text style={styles.price}>$ {item?.price}</Text>
+          {item?.child_categories?.map((_item, index) => {
+            if (_item?.products.length == 0) {
+              return;
+            }
+
+            return (
+              <View
+                key={index}
+                style={
+                  {
+                    // flex: 1,
+                    // justifyContent: 'space-between',
+                  }
+                }>
+                <View>
+                  <View style={styles.labelContainer}>
+                    <Text style={styles.label}>{_item?.name}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('Catherb', {
+                          item: _item?.products,
+                          name: _item?.name,
+                        });
+                      }}>
+                      <Text style={styles.viewMore}>View More</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      maxHeight: responsiveHeight(32.5),
+                    }}>
+                    <FlatList
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      data={_item?.products}
+                      contentContainerStyle={styles.bladder}
+                      renderItem={({item, index}) => {
+                        let fav = data?.data?.data.find(
+                          i => i?.product_id === item.id,
+                        );
+
+                        console.log('fav', fav);
+                        return (
+                          <View style={styles.containerItem}>
+                            <View style={styles.imageContainer}>
+                              <Image
+                                source={{uri: item?.image_url}}
+                                resizeMode="contain"
+                                style={styles.image}
+                              />
+                            </View>
+                            <Text numberOfLines={2} style={styles.itemName}>
+                              {item?.name}
+                            </Text>
+                            <View style={styles.priceIcon}>
+                              <Text style={styles.price}>$ {item?.price}</Text>
+                              <TouchableOpacity
+                                onPress={() => {
+                                  handle(item);
+                                }}>
+                                {loader == item.id ? (
+                                  <ActivityIndicator
+                                    size={'small'}
+                                    color={'green'}
+                                  />
+                                ) : (
+                                  <Image
+                                    resizeMode="contain"
+                                    source={images.heart}
+                                    style={[
+                                      styles.heartIcon,
+                                      {tintColor: fav ? null : 'gray'},
+                                    ]}
+                                  />
+                                )}
+                              </TouchableOpacity>
+                            </View>
                             <TouchableOpacity
+                              style={styles.plus}
                               onPress={() => {
-                                Addfavrts({product_id: item.id});
+                                navigation.navigate('Productdetail', {
+                                  productItem: item,
+                                });
                               }}>
                               <Image
                                 resizeMode="contain"
-                                source={images.heart}
-                                style={[
-                                  styles.heartIcon,
-                                  {tintColor: fav ? null : 'gray'},
-                                ]}
+                                source={images.plus}
+                                style={styles.icon}
                               />
                             </TouchableOpacity>
                           </View>
-                          <TouchableOpacity
-                            style={styles.plus}
-                            onPress={() => {
-                              navigation.navigate('Productdetail', {
-                                productItem: item,
-                              });
-                            }}>
-                            <Image
-                              resizeMode="contain"
-                              source={images.plus}
-                              style={styles.icon}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      );
-                    }}
-                  />
+                        );
+                      }}
+                    />
+                  </View>
                 </View>
-              </View>
 
-              {/* <View>
+                {/* <View>
               <View
                 style={[
                   styles.labelContainer,
@@ -189,8 +215,9 @@ const Dog = ({navigation, route}) => {
                 />
               </View>
             </View> */}
-            </View>
-          ))}
+              </View>
+            );
+          })}
           {/* <View ></View> */}
         </ScrollView>
       </View>

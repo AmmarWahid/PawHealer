@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   StatusBar,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../Components/Header';
 import Dummy from './../../../Assets/Dummy.jpg';
@@ -17,12 +18,19 @@ import {
 } from 'react-native-responsive-dimensions';
 import {images} from '../../../Utlies/Images';
 import {useDispatch} from 'react-redux';
+import {useGetmeMutation} from '../../../Store/Main';
 
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
+  const [Getme, {data, status, isLoading}] = useGetmeMutation();
+  useLayoutEffect(() => {
+    Getme();
+  }, []);
+  console.log('data', data?.data?.details, status);
   const handleLogout = () => {
     dispatch({type: 'LOGOUT', payload: null});
   };
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
@@ -47,10 +55,16 @@ const Profile = ({navigation}) => {
           <View>
             <Image source={Dummy} style={styles.profileimg} />
           </View>
-          <View>
-            <Text style={styles.name}>Elena Thompson</Text>
-            <Text style={styles.nametxt}>@elena,thompson</Text>
-          </View>
+          {isLoading ? (
+            <ActivityIndicator size={'large'} color={'green'} />
+          ) : (
+            <View>
+              <Text style={styles.name}>{data?.data?.name}</Text>
+              <Text numberOfLines={1} style={styles.nametxt}>
+                {data?.data?.email}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
 
@@ -76,7 +90,7 @@ const Profile = ({navigation}) => {
               <Image source={images.leftarrow} style={styles.btnarrow} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.navigate('Notification');
             }}
@@ -88,8 +102,8 @@ const Profile = ({navigation}) => {
             </View>
             <View>
               <Image source={images.leftarrow} style={styles.btnarrow} />
-            </View>
-          </TouchableOpacity>
+            </View> 
+          </TouchableOpacity>*/}
           <TouchableOpacity style={styles.btnicontxt_contain}>
             <View style={styles.iconcontain}>
               <Image source={images.delete} style={styles.btnicon} />
@@ -150,6 +164,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.7),
     color: 'gray',
     fontFamily: 'Poppins-Regular',
+    width: responsiveWidth(60),
   },
   profileimg: {
     height: responsiveWidth(18),

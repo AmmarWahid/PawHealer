@@ -53,6 +53,6 @@ export const pawhealerApis = createApi({
 export const {
   useSignupMutation,
   useLoginMutation,
-  useForgetPasswordQuery,
+  useLazyForgetPasswordQuery,
   useVerifyOtpMutation,
 } = pawhealerApis;

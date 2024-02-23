@@ -14,6 +14,7 @@ import Processing from './Processing';
 import Cancelled from './Cancelled';
 import {useNavigation} from '@react-navigation/native';
 import {useGetorderQuery} from '../../../Store/Main';
+import MsgModal from '../../../Common/loader/Loader';
 
 const renderTabBar = props => (
   <TabBar
@@ -55,7 +56,7 @@ const renderTabBar = props => (
 
 const MyOrder = () => {
   const navigation = useNavigation();
-
+  const {data, isLoading} = useGetorderQuery();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'Delivered', title: 'Delivered'},
@@ -69,7 +70,9 @@ const MyOrder = () => {
     Cancelled: Cancelled,
   });
 
-  return (
+  return isLoading ? (
+    <MsgModal loader={true} />
+  ) : (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar
         translucent={true}

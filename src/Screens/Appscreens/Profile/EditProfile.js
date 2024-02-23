@@ -1,5 +1,5 @@
 import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../Components/Header';
 import Dummy from './../../../Assets/Dummy.jpg';
@@ -15,8 +15,13 @@ import CoustomTextinput from '../../../Common/Textinput/Textinput';
 import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../../Utlies/constant/Themes';
 import {DiscriptionText} from '../../../Common/Coustomtext/Index';
+import {useGetmeMutation} from '../../../Store/Main';
 
 const EditProfile = ({navigation}) => {
+  const [Getme, {data, status}] = useGetmeMutation();
+  useLayoutEffect(() => {
+    Getme();
+  }, []);
   const {
     control,
     handleSubmit,
@@ -50,8 +55,8 @@ const EditProfile = ({navigation}) => {
             <Image source={Dummy} style={styles.profileimg} />
           </View>
           <View>
-            <Text style={styles.name}>Elena Thompson</Text>
-            <Text style={styles.nametxt}>@elena,thompson</Text>
+            <Text style={styles.name}>{data?.data?.name}</Text>
+            <Text style={styles.nametxt}>{data?.data?.email}</Text>
           </View>
         </View>
       </View>
@@ -150,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.7),
     color: 'gray',
     fontFamily: 'Poppins-Regular',
+    width: responsiveWidth(60),
   },
   profileimg: {
     height: responsiveWidth(18),

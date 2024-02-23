@@ -87,6 +87,7 @@ const Login = ({navigation}) => {
           alignSelf={true}
           control={control}
           name={'password'}
+          // passwordEye={true}
           style={{
             backgroundColor: 'rgba(224, 237, 222, 0.8)',
             marginTop: responsiveHeight(2),

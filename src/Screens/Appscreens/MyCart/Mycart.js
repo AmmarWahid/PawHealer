@@ -37,7 +37,6 @@ const Mycart = ({navigation}) => {
     } else if (action === false) {
       totalquntity--;
     }
-    console.log(totalquntity);
 
     const updated = order.map(i => {
       if (i.id == item.id) {
@@ -56,9 +55,7 @@ const Mycart = ({navigation}) => {
     order[i].totalprice++;
     let element = order[i].totalprice;
     totalprice = totalprice + element;
-    console.log('element', element);
   }
-  console.log('total price', totalprice);
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1}}>
       <StatusBar
@@ -67,7 +64,7 @@ const Mycart = ({navigation}) => {
         barStyle={'light-content'}
       />
 
-      <Header Heading={'My Cart'} color={'#fff'} />
+      <Header Heading={'My Cart'} color={'#fff'} backbtn={true} />
       <View
         style={{
           marginTop: responsiveHeight(2),

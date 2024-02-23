@@ -19,8 +19,10 @@ import Fields from '../../../Common/Fields/Fields';
 import {images} from '../../../Utlies/Images';
 import CoustomButton from '../../../Common/CoustomButton.js/CoustomButton';
 import {colors} from '../../../Utlies/constant/Themes';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useCreateorderMutation} from '../../../Store/Main';
+import useToast from '../../../Hooks';
+import {setorderclean} from '../../../Store/Slice';
 
 const Checkout = ({navigation, route}) => {
   const {total} = route.params || {};
@@ -31,13 +33,14 @@ const Checkout = ({navigation, route}) => {
   } = useForm();
   const {order} = useSelector(state => state.Slice);
   const [createOrder, {status, isLoading}] = useCreateorderMutation();
+  const dispatch = useDispatch();
   const updated = order.map(i => {
     return {
       product_id: i.id,
       quantity: i.Quantity,
     };
   });
-
+  const {showToast} = useToast();
   const onsubmit = async value => {
     const body = {
       ...value,
@@ -46,9 +49,11 @@ const Checkout = ({navigation, route}) => {
     console.log('first', body);
     try {
       const res = await createOrder(body);
-      console.log('res', res.data);
+      console.log('res', res.data?.message);
       if (res?.data?.success) {
+        showToast('success', '👍', res?.data?.message, 5000);
         navigation.navigate('TabStacks');
+        dispatch(setorderclean());
       }
     } catch (error) {
       console.log(error);

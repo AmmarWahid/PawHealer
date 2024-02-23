@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -9,159 +9,114 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {SafeAreaView} from 'react-native-safe-area-context';
+// import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../Components/Header';
 import {images} from '../../../../Utlies/Images';
 import {colors} from '../../../../Utlies/constant/Themes';
+import {useAddfavMutation, useGetAllfavQuery} from '../../../../Store/Main';
 
-const Catherb = ({navigation}) => {
+const Catherb = ({navigation, route}) => {
+  const {item, name} = route.params || {};
+  console.log('item', item);
+  const [Addfavrts, {status}] = useAddfavMutation();
+  const [loader, setLoader] = useState();
+  const {data} = useGetAllfavQuery();
+  // console.log('iserror', status);
+  const handle = async item => {
+    setLoader(item?.id);
+    const res = await Addfavrts({product_id: item.id});
+    if (res?.data?.success == true) {
+      setLoader();
+    }
+  };
   return (
-    <SafeAreaView edges={['bottom']} style={styles.container}>
-      <StatusBar
-        translucent={true}
-        backgroundColor={'transparent'}
-        barStyle={'light-content'}
-      />
-      <Header
-        Heading={'Cat Herbs'}
-        color={'#fff'}
-        navigation={() => navigation.navigate('HomeScreen')}
-      />
-      <View style={{}}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingBottom: responsiveHeight(2),
-          }}
-          style={{
-            marginTop: responsiveHeight(2),
-            paddingBottom: responsiveHeight(14),
-            zIndex: 999999,
-          }}>
-          <View
-            style={{
-              justifyContent: 'space-between',
-            }}>
-            <View>
-              <View style={styles.labelContainer}>
-                <Text style={styles.label}>Cat Herbal Formula</Text>
-                <TouchableOpacity>
-                  <Text style={styles.viewMore}>View More</Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  maxHeight: responsiveHeight(32.5),
-                }}>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={[1, 2, 3]}
-                  contentContainerStyle={styles.bladder}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View style={styles.containerItem}>
-                        <View style={styles.imageContainer}>
-                          <Image
-                            source={images.mask}
-                            resizeMode="contain"
-                            style={styles.image}
-                          />
-                        </View>
-                        <Text style={styles.itemName}>Cough Center</Text>
-                        <View style={styles.priceIcon}>
-                          <Text style={styles.price}>$12.00</Text>
-                          <Image
-                            resizeMode="contain"
-                            source={images.heart}
-                            style={styles.heartIcon}
-                          />
-                        </View>
-                        <TouchableOpacity
-                          style={styles.plus}
-                          onPress={() => {
-                            navigation.navigate('Productdetail');
-                          }}>
-                          <Image
-                            resizeMode="contain"
-                            source={images.plus}
-                            style={styles.icon}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }}
-                />
-              </View>
-            </View>
+    <SafeAreaView style={styles.container}>
+      <View style={{flex: 1}}>
+        <StatusBar
+          translucent={true}
+          backgroundColor={'transparent'}
+          barStyle={'light-content'}
+        />
+        <Header
+          Heading={name}
+          color={'#fff'}
+          navigation={() => navigation.navigate('HomeScreen')}
+        />
 
-            <View>
-              <View
-                style={[
-                  styles.labelContainer,
-                  {marginTop: responsiveHeight(5)},
-                ]}>
-                <Text style={styles.label}>Breathing</Text>
-                <TouchableOpacity>
-                  <Text style={styles.viewMore}>View More</Text>
-                </TouchableOpacity>
-              </View>
+        <FlatList
+          numColumns={2}
+          data={item}
+          style={{}}
+          contentContainerStyle={styles.bladder}
+          renderItem={({item, index}) => {
+            let fav = data?.data?.data.find(i => i?.product_id === item.id);
+
+            // console.log('fav', fav);
+            return (
               <View
                 style={{
-                  // backgroundColor: 'yellow',
-                  maxHeight: responsiveHeight(32.5),
+                  flex: 1,
+                  alignItems: 'center',
+                  marginTop: responsiveHeight(2),
+                  marginBottom: responsiveHeight(4),
                 }}>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  data={[1, 2, 3]}
-                  contentContainerStyle={styles.bladder}
-                  renderItem={({item, index}) => {
-                    return (
-                      <View style={styles.containerItem}>
-                        <View style={styles.imageContainer}>
-                          <Image
-                            source={images.mask}
-                            resizeMode="contain"
-                            style={styles.image}
-                          />
-                        </View>
-                        <Text style={styles.itemName}>Cough Center</Text>
-                        <View style={styles.priceIcon}>
-                          <Text style={styles.price}>$12.00</Text>
-                          <Image
-                            resizeMode="contain"
-                            source={images.heart}
-                            style={styles.heartIcon}
-                          />
-                        </View>
-                        <TouchableOpacity
-                          style={styles.plus}
-                          onPress={() => {
-                            navigation.navigate('Productdetail');
-                          }}>
-                          <Image
-                            resizeMode="contain"
-                            source={images.plus}
-                            style={styles.icon}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }}
-                />
+                <View style={styles.containerItem}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={{uri: item?.image_url}}
+                      resizeMode="contain"
+                      style={styles.image}
+                    />
+                  </View>
+                  <Text numberOfLines={2} style={styles.itemName}>
+                    {item?.name}
+                  </Text>
+                  <View style={styles.priceIcon}>
+                    <Text style={styles.price}>$ {item?.price}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        handle(item);
+                      }}>
+                      {loader == item.id ? (
+                        <ActivityIndicator size={'small'} color={'green'} />
+                      ) : (
+                        <Image
+                          resizeMode="contain"
+                          source={images.heart}
+                          style={[
+                            styles.heartIcon,
+                            {tintColor: fav ? null : 'gray'},
+                          ]}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.plus}
+                    onPress={() => {
+                      navigation.navigate('Productdetail', {
+                        productItem: item,
+                      });
+                    }}>
+                    <Image
+                      resizeMode="contain"
+                      source={images.plus}
+                      style={styles.icon}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </View>
-          {/* ========= */}
-        </ScrollView>
+            );
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -190,10 +145,13 @@ const styles = StyleSheet.create({
     color: colors.AppColor,
   },
   bladder: {
-    flexDirection: 'row',
-    gap: responsiveWidth(2),
+    // flexDirection: 'row',
+    // gap: responsiveWidth(12),
     paddingHorizontal: responsiveWidth(3),
-    paddingBottom: responsiveHeight(8),
+    // paddingBottom: responsiveHeight(3),
+
+    // justifyContent: 'space-between',
+    // width: responsiveWidth(100),
   },
   containerItem: {
     width: responsiveWidth(45),
@@ -228,8 +186,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: '#000',
     fontWeight: '500',
-    fontSize: responsiveFontSize(1.9),
+    fontSize: responsiveFontSize(1.6),
     marginTop: responsiveHeight(1),
+    width: responsiveWidth(35),
+    height: responsiveHeight(4.5),
   },
   priceIcon: {
     flexDirection: 'row',

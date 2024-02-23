@@ -75,6 +75,15 @@ export const getMainApis = createApi({
 
       providesTags: ['ORDERS'],
     }),
+
+    Getme: builder.mutation({
+      query() {
+        return {
+          method: 'POST',
+          url: `me`,
+        };
+      },
+    }),
   }),
 });
 
@@ -85,4 +94,5 @@ export const {
   useDeletefavMutation,
   useCreateorderMutation,
   useGetorderQuery,
+  useGetmeMutation,
 } = getMainApis;

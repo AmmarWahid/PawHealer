@@ -13,7 +13,7 @@ const Processing = () => {
   const {data} = useGetorderQuery();
   // console.log('data', data.data.data);
   const orders = data?.data?.data?.filter(i => i.order_status === 'pending');
-  console.log('ordersPending', orders);
+  // console.log('ordersPending', orders);
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{}}>

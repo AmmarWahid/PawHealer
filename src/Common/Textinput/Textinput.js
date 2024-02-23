@@ -52,8 +52,11 @@ const CoustomTextinput = ({
   onIconpress,
   numberOfLines,
   inputstyle,
+  textAlignVertical,
 }) => {
-  const [hide, Sethide] = useState(secureTextEntry);
+  const [hide, Sethide] = useState(true);
+
+  console.log('hide', hide);
   return (
     <View style={contanierstyle}>
       {label && (
@@ -107,8 +110,8 @@ const CoustomTextinput = ({
               inputstyle,
             ]}
             placeholder={placeholder}
-            secureTextEntry={secureTextEntry ? hide : hide}
-            keyboardType={keyboardnumber ? 'numeric' : 'twitter'}
+            secureTextEntry={hide}
+            keyboardType={keyboardnumber ? 'numeric' : 'email-address'}
             value={value}
             onChangeText={onchangetext}
             placeholderTextColor={Placecolor ? '#fff' : '#000'}
@@ -131,7 +134,7 @@ const CoustomTextinput = ({
             </View>
           )}
         </View>
-        {passwordEye && (
+        {passwordEye == true && (
           <TouchableOpacity
             onPress={() => {
               Sethide(!hide);
@@ -139,14 +142,14 @@ const CoustomTextinput = ({
             <Image
               resizeMode="contain"
               source={
-                secureTextEntry == hide
+                !hide
                   ? require('../Assets/Hide.png')
                   : require('../Assets/View.png')
               }
               style={{
                 height: responsiveHeight(3),
                 width: responsiveHeight(3),
-                right: responsiveWidth(1.5),
+                right: responsiveWidth(12),
                 tintColor: 'grey',
               }}
             />

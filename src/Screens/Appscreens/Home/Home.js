@@ -31,7 +31,6 @@ const Data = [
 ];
 const Home = ({navigation}) => {
   const {data, isLoading} = useGetAllCategoriesQuery();
-  console.log('data', data);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}} edges={['bottom']}>
       <StatusBar
@@ -54,7 +53,7 @@ const Home = ({navigation}) => {
           style={styles.app_logo}
         />
       </View>
-      <CoustomTextinput
+      {/* <CoustomTextinput
         alignSelf
         style={{
           backgroundColor: 'rgba(224, 237, 222, 0.8)',
@@ -63,12 +62,12 @@ const Home = ({navigation}) => {
         inputIcon={images.search}
         tintColor={colors.AppColor}
         placeholder={'Dogs herb'}
-      />
+      /> */}
 
       <View style={{}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: responsiveHeight(30)}}
+          contentContainerStyle={{paddingBottom: responsiveHeight(15)}}
           style={{flexGrow: 1}}>
           <>
             <View
@@ -86,7 +85,7 @@ const Home = ({navigation}) => {
                 activeDotStyle={{width: responsiveWidth(4)}}>
                 <View>
                   <Image
-                    source={images.dog}
+                    source={images.dog2}
                     resizeMode="cover"
                     style={styles.slide_1}
                   />
@@ -128,9 +127,11 @@ const Home = ({navigation}) => {
                   marginTop: responsiveHeight(1),
                 }}
                 renderItem={({item, index}) => {
+                  // console.log('first', item);
                   return (
                     <View style={{flex: 1}}>
                       <TouchableOpacity
+                        style={{alignItems: 'center', justifyContent: 'center'}}
                         onPress={() => {
                           // item.id === 1
                           //   ? navigation.navigate('Dog')
@@ -153,6 +154,7 @@ const Home = ({navigation}) => {
                             width: responsiveWidth(18),
                           }}
                         />
+                        <Text style={styles.cati_name}>{item?.name}</Text>
                       </TouchableOpacity>
                     </View>
                   );
@@ -160,27 +162,28 @@ const Home = ({navigation}) => {
               />
             </View>
 
-            <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Coustom', {
+                  image: images.bannercoustom,
+                  style: styles.bannercoustom,
+                  styletxt: styles.cati_name,
+                });
+              }}>
               <Image
                 source={images.bannercoustom}
                 resizeMode="cover"
-                style={{
-                  height: responsiveHeight(22),
-                  width: responsiveWidth(90),
-                  borderRadius: responsiveWidth(5),
-                  alignSelf: 'center',
-                  marginTop: responsiveHeight(3),
-                }}
+                style={styles.bannercoustom}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.label_btn_contain}>
               <View>
                 <Text style={styles.label}>Favorite Products</Text>
               </View>
 
-              <TouchableOpacity>
+              {/* <TouchableOpacity>
                 <Text style={styles.view_more}>View More</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={{}}>
               <FlatList
@@ -191,6 +194,7 @@ const Home = ({navigation}) => {
                   gap: responsiveWidth(5),
                   paddingHorizontal: responsiveWidth(3),
                   marginTop: responsiveHeight(1),
+                  left: responsiveWidth(2),
                 }}
                 renderItem={({item, index}) => {
                   return (
@@ -205,15 +209,7 @@ const Home = ({navigation}) => {
                           }}
                         />
                         <View>
-                          <Text
-                            style={{
-                              fontSize: responsiveFontSize(1.5),
-                              fontFamily: 'Poppins-Bold',
-                              color: '#000',
-                              marginTop: responsiveHeight(1),
-                            }}>
-                            Dogs herbs
-                          </Text>
+                          <Text style={styles.cati_name}>Dog herbs</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -247,6 +243,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(20),
     width: responsiveWidth(90),
     borderRadius: responsiveWidth(5),
+    backgroundColor: '#fff',
   },
   label: {
     fontFamily: 'Poppins-Bold',
@@ -264,5 +261,19 @@ const styles = StyleSheet.create({
     color: colors.AppColor,
     fontSize: responsiveFontSize(1.8),
     fontFamily: 'Poppins-Regular',
+  },
+  cati_name: {
+    fontSize: responsiveFontSize(1.4),
+    color: '#000',
+    width: responsiveWidth(23),
+    textAlign: 'center',
+    marginTop: responsiveHeight(1),
+  },
+  bannercoustom: {
+    height: responsiveHeight(22),
+    width: responsiveWidth(90),
+    borderRadius: responsiveWidth(5),
+    alignSelf: 'center',
+    marginTop: responsiveHeight(3),
   },
 });

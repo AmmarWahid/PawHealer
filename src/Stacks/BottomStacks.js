@@ -22,13 +22,21 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {colors} from '../Utlies/constant/Themes';
+import {View, Text} from 'react-native';
+import {useSelector} from 'react-redux';
+import Coustom from '../Screens/Appscreens/Coustom/Coustom';
+import Coustom1 from '../Screens/Appscreens/Coustom/Coustom1';
+import Coustom3 from '../Screens/Appscreens/Coustom/Coustom3';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeScreen" component={Home} />
-      <Stack.Screen name="Products" component={Products} />
+      <Stack.Screen name="Coustom" component={Coustom} />
+      <Stack.Screen name="Coustom1" component={Coustom1} />
+      <Stack.Screen name="Coustom3" component={Coustom3} />
+
       <Stack.Screen name="Catherb" component={Catherb} />
       <Stack.Screen name="Dog" component={Dog} />
       <Stack.Screen name="Supplements" component={Supplements} />
@@ -63,6 +71,8 @@ const ProfileStack = () => {
 };
 
 function TabStacks() {
+  const {order} = useSelector(state => state.Slice);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -115,11 +125,38 @@ function TabStacks() {
             // top: responsiveHeight(0.1),
           },
           tabBarIcon: ({focused}) => (
-            <FontAwesome
-              name="shopping-cart"
-              size={responsiveHeight(3)}
-              color={focused ? colors.AppColor : '#000'}
-            />
+            <View>
+              {order.length == 0 ? null : (
+                <View
+                  style={{
+                    height: responsiveWidth(5),
+                    width: responsiveWidth(5),
+                    position: 'absolute',
+                    backgroundColor: 'green',
+                    bottom: responsiveHeight(1.3),
+                    left: responsiveWidth(6),
+                    borderRadius: responsiveWidth(5),
+                    zIndex: 99999,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: responsiveFontSize(1),
+                      fontWeight: 'bold',
+                    }}>
+                    {order.length}
+                  </Text>
+                </View>
+              )}
+
+              <FontAwesome
+                name="shopping-cart"
+                size={responsiveHeight(3)}
+                color={focused ? colors.AppColor : '#000'}
+              />
+            </View>
           ),
         }}
       />

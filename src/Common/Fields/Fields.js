@@ -41,6 +41,7 @@ const Fields = ({
   letterSpacing,
   onIconpress,
   inputstyle,
+  textAlignVertical,
 }) => {
   const Data = `otp[${index}]`;
   return (
@@ -138,6 +139,7 @@ const Fields = ({
             />
           );
         }
+        console.log('first', passwordEye);
         return (
           <CoustomTextinput
             Error={error && error[name]?.message}
@@ -167,6 +169,7 @@ const Fields = ({
             letterSpacing={letterSpacing}
             onIconpress={onIconpress}
             inputstyle={inputstyle}
+            textAlignVertical={textAlignVertical}
           />
         );
       }}

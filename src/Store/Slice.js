@@ -54,10 +54,19 @@ export const userSlice = createSlice({
     setUpdateOrder: (state, action) => {
       state.order = action.payload;
     },
+    setorderclean: (state, action) => {
+      state.order = [];
+    },
   },
 });
 
-export const {setUser, logoutUser, setAccessToken, setorder, setUpdateOrder} =
-  userSlice.actions;
+export const {
+  setUser,
+  logoutUser,
+  setAccessToken,
+  setorder,
+  setUpdateOrder,
+  setorderclean,
+} = userSlice.actions;
 
 export default userSlice.reducer;

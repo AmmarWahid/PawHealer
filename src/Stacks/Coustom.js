@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -11,7 +11,13 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {images} from '../Utlies/Images';
+import {useGetmeMutation} from '../Store/Main';
 const Coustom = props => {
+  const [Getme, {data, status, isLoading}] = useGetmeMutation();
+  useLayoutEffect(() => {
+    Getme();
+  }, []);
+  console.log('data', data?.data?.details, status);
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <DrawerContentScrollView {...props}>
@@ -35,7 +41,7 @@ const Coustom = props => {
               color: '#000',
               letterSpacing: 1,
             }}>
-            James bond
+            {data?.data?.name}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Text
@@ -45,7 +51,7 @@ const Coustom = props => {
                 fontFamily: 'Poppins-Regular',
                 bottom: responsiveHeight(1),
               }}>
-              @Jamesbond@hotmail.com
+              {data?.data?.email}
             </Text>
           </View>
         </View>

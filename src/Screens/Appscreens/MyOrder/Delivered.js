@@ -13,7 +13,7 @@ const Delivered = () => {
   const {data} = useGetorderQuery();
   // console.log('data', data.data.data);
   const orders = data?.data?.data?.filter(i => i.order_status === 'delivered');
-  console.log('ordersDeliverd', orders);
+  // console.log('ordersDeliverd', orders);
   return (
     <SafeAreaView edges={['bottom']} style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{marginTop: responsiveHeight(2)}}>

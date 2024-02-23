@@ -8,7 +8,7 @@ import {
 import CoustomHeader from '../Common/Header/Header';
 import {images} from '../Utlies/Images';
 
-const Header = ({Heading, color, navigation}) => {
+const Header = ({Heading, color, navigation, backbtn}) => {
   return (
     <View>
       <View
@@ -24,7 +24,7 @@ const Header = ({Heading, color, navigation}) => {
         <CoustomHeader
           Heading={Heading}
           color={color}
-          lefticon={images.backarrow}
+          lefticon={backbtn == true ? null : images.backarrow}
           textStyle={{top: responsiveHeight(3)}}
           leftTouch={navigation}
           fontFamily={'Poppins-Regular'}
