@@ -157,13 +157,59 @@ const Productdetail = ({navigation, route}) => {
 
           {selected === 0 && (
             <View>
-              <Text style={styles.txt}>{productItem?.description}</Text>
+              {productItem?.name == 'Bladder Control' ? (
+                <View style={{}}>
+                  <Text
+                    style={[
+                      styles.discColor,
+                      {color: '#000', marginHorizontal: responsiveWidth(6.1)},
+                    ]}>
+                    Choose This Pattern If:
+                  </Text>
+                  <Text
+                    style={
+                      styles.txt
+                    }>{`1: Leaking of Urine \n2: Hind-Leg Weakness \n3:Older Pet`}</Text>
+
+                  <Text
+                    style={[
+                      styles.discColor,
+                      {color: '#000', marginHorizontal: responsiveWidth(6.1)},
+                    ]}>
+                    Chinese Herbal Formula Uses:
+                  </Text>
+                  <Text
+                    style={
+                      styles.txt
+                    }>{`1: Promotes Bladder Control \n2: Strengthens the Bladder \n3:Helps with Leaking
+`}</Text>
+                  <Text
+                    style={[
+                      styles.discColor,
+                      {color: '#000', marginHorizontal: responsiveWidth(6.1)},
+                    ]}>
+                    Traditional Chinese Herb Action:
+                  </Text>
+
+                  <Text
+                    style={
+                      styles.txt
+                    }>{`1: Astringes Urine\n2: Supplements Kidney Qi
+`}</Text>
+                </View>
+              ) : (
+                <Text style={styles.txt}>{productItem?.description}</Text>
+              )}
 
               <View style={styles.heading_contain}>
                 <View style={styles.btn}>
                   <TouchableOpacity
                     onPress={() => {
-                      value == 1 ? null : setValue(value - 1);
+                      value == 5
+                        ? setValue(value - 2)
+                        : value == 1
+                        ? null
+                        : setValue(value - 1);
                     }}>
                     <Image
                       resizeMode="contain"
@@ -175,11 +221,15 @@ const Productdetail = ({navigation, route}) => {
                     />
                   </TouchableOpacity>
                   <View>
-                    <Text style={styles.btn_txt}>{value}</Text>
+                    <Text style={styles.btn_txt}>{value !== 4 && value}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => {
-                      setValue(value + 1);
+                      value < 5
+                        ? value == 3
+                          ? setValue(value + 2)
+                          : setValue(value + 1)
+                        : null;
                     }}>
                     <Image
                       resizeMode="contain"

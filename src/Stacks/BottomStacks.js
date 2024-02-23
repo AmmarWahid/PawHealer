@@ -126,7 +126,7 @@ function TabStacks() {
           },
           tabBarIcon: ({focused}) => (
             <View>
-              {order.length == 0 ? null : (
+              {order?.length == 0 ? null : (
                 <View
                   style={{
                     height: responsiveWidth(5),
@@ -146,7 +146,7 @@ function TabStacks() {
                       fontSize: responsiveFontSize(1),
                       fontWeight: 'bold',
                     }}>
-                    {order.length}
+                    {order?.length}
                   </Text>
                 </View>
               )}

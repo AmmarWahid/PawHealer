@@ -116,7 +116,12 @@ const Dog = ({navigation, route}) => {
                               {item?.name}
                             </Text>
                             <View style={styles.priceIcon}>
-                              <Text style={styles.price}>$ {item?.price}</Text>
+                              <Text style={styles.price}>
+                                ${' '}
+                                {item?.name == 'Bladder Control'
+                                  ? 49.75
+                                  : item?.price}
+                              </Text>
                               <TouchableOpacity
                                 onPress={() => {
                                   handle(item);
