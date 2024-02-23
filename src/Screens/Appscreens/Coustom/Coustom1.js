@@ -154,7 +154,7 @@ const Coustom1 = ({navigation, route}) => {
             errorcolor={'red'}
             alignSelf={true}
             control={control}
-            name={'Pet Name'}
+            name={'Bread'}
             style={{
               borderWidth: responsiveWidth(0.3),
               marginTop: responsiveHeight(1),
@@ -167,7 +167,7 @@ const Coustom1 = ({navigation, route}) => {
               height: responsiveHeight(6),
               fontSize: responsiveFontSize(1.4),
             }}
-            placeholder={'Pet Name'}
+            placeholder={'Bread'}
             textbgcolor={'#000'}
           />
         </View>

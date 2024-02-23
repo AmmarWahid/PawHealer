@@ -47,6 +47,7 @@ const Coustom3 = ({navigation, route}) => {
   const [totalprice, setTotalprice] = useState(6);
   // console.log('productItem', productItem);
   const dispatch = useDispatch();
+  let net = 100 * value;
   //   const {order} = useSelector(state => state.Slice);
   //   // console.log('orderproduct', order);
   //   let net = productItem.price * value;
@@ -181,6 +182,11 @@ const Coustom3 = ({navigation, route}) => {
                 <View>
                   <Text style={styles.heading}>{`Total : $${100}/ea`}</Text>
                 </View>
+              </View>
+              <View style={{marginLeft: responsiveWidth(6)}}>
+                <Text style={styles.price}>
+                  Save $ {(value * net * 0.1).toFixed(0)}
+                </Text>
               </View>
               <View>
                 <CoustomButton

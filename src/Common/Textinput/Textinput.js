@@ -110,15 +110,17 @@ const CoustomTextinput = ({
               inputstyle,
             ]}
             placeholder={placeholder}
-            secureTextEntry={hide}
-            keyboardType={keyboardnumber ? 'numeric' : 'email-address'}
+            secureTextEntry={secureTextEntry && hide}
+            // keyboardType={keyboardnumber ? 'numeric' : 'default'}
+            keyboardType="default"
             value={value}
             onChangeText={onchangetext}
             placeholderTextColor={Placecolor ? '#fff' : '#000'}
             maxLength={maxLength}
-            multiline={true}
+            multiline={multiline}
             autoCapitalize="none"
           />
+
           {inputIcon && (
             <View onTouchEnd={onIconpress}>
               <Image
@@ -136,20 +138,21 @@ const CoustomTextinput = ({
         </View>
         {passwordEye == true && (
           <TouchableOpacity
+            style={{right: responsiveWidth(12)}}
             onPress={() => {
               Sethide(!hide);
             }}>
             <Image
               resizeMode="contain"
               source={
-                !hide
+                hide == false
                   ? require('../Assets/Hide.png')
                   : require('../Assets/View.png')
               }
               style={{
                 height: responsiveHeight(3),
                 width: responsiveHeight(3),
-                right: responsiveWidth(12),
+                // right: responsiveWidth(12),
                 tintColor: 'grey',
               }}
             />

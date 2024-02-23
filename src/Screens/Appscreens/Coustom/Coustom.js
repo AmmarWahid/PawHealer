@@ -260,6 +260,7 @@ const Coustom = ({navigation, route}) => {
                     inputstyle={{
                       height: responsiveHeight(16),
                       fontSize: responsiveFontSize(1.4),
+                      textAlignVertical: 'top',
                     }}
                     placeholder={'Your Comments?'}
                     textbgcolor={'#000'}

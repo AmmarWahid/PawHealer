@@ -189,6 +189,11 @@ const Productdetail = ({navigation, route}) => {
                   <Text style={styles.heading}>{`Total : $${net}/ea`}</Text>
                 </View>
               </View>
+              <View style={{marginLeft: responsiveWidth(6)}}>
+                <Text style={styles.price}>
+                  Save $ {(value * net * 0.1).toFixed(0)}
+                </Text>
+              </View>
               <View>
                 <CoustomButton
                   bgcolor={colors.AppColor}

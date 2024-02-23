@@ -145,6 +145,12 @@ const Home = ({navigation}) => {
                           //   ? navigation.navigate('Supplements')
                           //   : null;
                           navigation.navigate('Dog', {item: item});
+                          item?.name == 'Custom Blending' &&
+                            navigation.navigate('Coustom', {
+                              image: images.bannercoustom,
+                              style: styles.bannercoustom,
+                              styletxt: styles.cati_name,
+                            });
                         }}>
                         <Image
                           source={Data[index].Img}
