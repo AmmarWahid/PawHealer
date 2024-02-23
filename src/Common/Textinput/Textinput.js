@@ -110,7 +110,7 @@ const CoustomTextinput = ({
               inputstyle,
             ]}
             placeholder={placeholder}
-            secureTextEntry={hide}
+            secureTextEntry={true}
             keyboardType={keyboardnumber ? 'numeric' : 'email-address'}
             value={value}
             onChangeText={onchangetext}

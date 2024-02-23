@@ -11,10 +11,10 @@ import {Provider} from 'react-redux';
 import {Store, persistor} from './src/Store';
 import {PersistGate} from 'redux-persist/lib/integration/react';
 import Toast from 'react-native-toast-message';
-import Test from './Practices/Test';
-import {createContext, useContext, useState} from 'react';
-import wrap from './Practices/Ind';
-import Contct from './Practices/contct';
+// import Test from './Practices/Test';
+// import {createContext, useContext, useState} from 'react';
+// import wrap from './Practices/Ind';
+// import Contct from './Practices/contct';
 
 const Root = () => {
   return (
