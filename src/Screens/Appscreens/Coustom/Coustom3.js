@@ -183,11 +183,11 @@ const Coustom3 = ({navigation, route}) => {
                   <Text style={styles.heading}>{`Total : $${100}/ea`}</Text>
                 </View>
               </View>
-              <View style={{marginLeft: responsiveWidth(6)}}>
+              {/* <View style={{marginLeft: responsiveWidth(6)}}>
                 <Text style={styles.price}>
                   Save $ {(value * net * 0.1).toFixed(0)}
                 </Text>
-              </View>
+              </View> */}
               <View>
                 <CoustomButton
                   bgcolor={colors.AppColor}

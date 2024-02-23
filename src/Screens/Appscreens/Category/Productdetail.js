@@ -48,7 +48,10 @@ const Productdetail = ({navigation, route}) => {
   const dispatch = useDispatch();
   const {order} = useSelector(state => state.Slice);
   // console.log('orderproduct', order);
-  let net = productItem.price * value;
+  let net =
+    productItem?.name == 'Bladder Control'
+      ? 49.75 * value
+      : productItem.price * value;
 
   const handleAddtoCart = () => {
     const product = {
@@ -112,7 +115,12 @@ const Productdetail = ({navigation, route}) => {
               ]}>
               {productItem?.name}
             </Text>
-            <Text style={styles.price}>$ {productItem?.price}</Text>
+            <Text style={styles.price}>
+              ${' '}
+              {productItem?.name == 'Bladder Control'
+                ? 49.75
+                : productItem?.price}
+            </Text>
           </View>
           <View
             style={{
@@ -186,13 +194,27 @@ const Productdetail = ({navigation, route}) => {
                 </View>
 
                 <View>
-                  <Text style={styles.heading}>{`Total : $${net}/ea`}</Text>
+                  {/* <Text style={styles.heading}>{`Total : $${net}/ea`}</Text> */}
+                  <Text style={styles.heading}>{`Total : $${
+                    value == 2
+                      ? net - 15.5
+                      : value == 3
+                      ? net - 38.25
+                      : value == 5
+                      ? net - 78.75
+                      : net
+                  }/ea`}</Text>
                 </View>
               </View>
+
               <View style={{marginLeft: responsiveWidth(6)}}>
-                <Text style={styles.price}>
-                  Save $ {(value * net * 0.1).toFixed(0)}
-                </Text>
+                {value == 2 ? (
+                  <Text style={styles.heading}>Save $15.5</Text>
+                ) : value == 3 ? (
+                  <Text style={styles.heading}>Save $38.25</Text>
+                ) : (
+                  value == 5 && <Text style={styles.heading}>Save $78.75</Text>
+                )}
               </View>
               <View>
                 <CoustomButton

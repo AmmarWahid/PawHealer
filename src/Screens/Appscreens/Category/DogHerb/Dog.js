@@ -59,7 +59,7 @@ const Dog = ({navigation, route}) => {
           contentContainerStyle={{}}
           style={{
             marginTop: responsiveHeight(2),
-            marginBottom: responsiveHeight(10),
+            marginBottom: responsiveHeight(16),
           }}>
           {item?.child_categories?.map((_item, index) => {
             if (_item?.products.length == 0) {
