@@ -111,7 +111,6 @@ const CoustomTextinput = ({
             ]}
             placeholder={placeholder}
             secureTextEntry={secureTextEntry && hide}
-            // keyboardType={keyboardnumber ? 'numeric' : 'default'}
             keyboardType="default"
             value={value}
             onChangeText={onchangetext}
